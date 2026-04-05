@@ -16,513 +16,65 @@
     --mist: #e8e2d4;
     --paper: #faf7f2;
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-  }
-
-  /* ── MASTHEAD ── */
-  .masthead {
-    background: var(--ink);
-    color: var(--cream);
-    padding: 0;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .masthead-rule {
-    height: 4px;
-    background: linear-gradient(90deg, var(--rust) 0%, var(--gold) 50%, var(--sage) 100%);
-  }
-
-  .masthead-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2.5rem 2rem 2rem;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: end;
-    gap: 1rem;
-  }
-
-  .masthead-tagline {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gold);
-    opacity: 0.9;
-  }
-
-  .masthead-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 8vw, 6rem);
-    font-weight: 900;
-    line-height: 0.9;
-    text-align: center;
-    letter-spacing: -0.02em;
-  }
-
-  .masthead-title span {
-    color: var(--rust);
-    font-style: italic;
-  }
-
-  .masthead-sub {
-    font-size: 0.8rem;
-    color: rgba(245,240,232,0.5);
-    text-align: right;
-    line-height: 1.6;
-  }
-
-  .nav-strip {
-    background: var(--ink);
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding: 0.75rem 2rem;
-  }
-
-  .nav-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-  }
-
-  .nav-inner a {
-    color: rgba(245,240,232,0.6);
-    text-decoration: none;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-
+  body { background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+  .masthead { background: var(--ink); color: var(--cream); padding: 0; position: relative; overflow: hidden; }
+  .masthead-rule { height: 4px; background: linear-gradient(90deg, var(--rust) 0%, var(--gold) 50%, var(--sage) 100%); }
+  .masthead-inner { max-width: 1200px; margin: 0 auto; padding: 2.5rem 2rem 2rem; display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 1rem; }
+  .masthead-tagline { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); opacity: 0.9; }
+  .masthead-title { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; line-height: 0.9; text-align: center; letter-spacing: -0.02em; }
+  .masthead-title span { color: var(--rust); font-style: italic; }
+  .masthead-sub { font-size: 0.8rem; color: rgba(245,240,232,0.5); text-align: right; line-height: 1.6; }
+  .nav-strip { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.1); padding: 0.75rem 2rem; }
+  .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 2rem; align-items: center; }
+  .nav-inner a { color: rgba(245,240,232,0.6); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; cursor: pointer; }
   .nav-inner a:hover, .nav-inner a.active { color: var(--gold); }
-
-  .nav-inner .submit-btn {
-    margin-left: auto;
-    background: var(--rust);
-    color: white;
-    padding: 0.4rem 1.1rem;
-    border-radius: 2px;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-
-  /* ── HERO STRIP ── */
-  .dateline {
-    background: var(--cream);
-    border-bottom: 2px solid var(--ink);
-    padding: 0.5rem 2rem;
-  }
-  .dateline-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    color: rgba(26,22,18,0.5);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
+  .nav-inner .submit-btn { margin-left: auto; background: var(--rust); color: white; padding: 0.4rem 1.1rem; border-radius: 2px; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; }
+  .dateline { background: var(--cream); border-bottom: 2px solid var(--ink); padding: 0.5rem 2rem; }
+  .dateline-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 1.5rem; font-family: 'DM Mono', monospace; font-size: 0.65rem; color: rgba(26,22,18,0.5); text-transform: uppercase; letter-spacing: 0.1em; }
   .dateline-inner .hot { color: var(--rust); font-weight: 500; }
-
-  /* ── LAYOUT ── */
-  .main-grid {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2.5rem 2rem;
-    display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 3rem;
-  }
-
-  /* ── SECTION HEADER ── */
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-    border-bottom: 2px solid var(--ink);
-    padding-bottom: 0.5rem;
-    margin-bottom: 1.5rem;
-  }
-  .section-header h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    font-style: italic;
-  }
-  .section-header .count {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--rust);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  /* ── FEATURED EVENT ── */
-  .featured {
-    border: 2px solid var(--ink);
-    background: var(--ink);
-    color: var(--cream);
-    padding: 2rem;
-    margin-bottom: 2rem;
-    position: relative;
-    overflow: hidden;
-    animation: fadeUp 0.6s ease both;
-  }
-
-  .featured::before {
-    content: 'EDITOR\'S PICK';
-    position: absolute;
-    top: 1rem;
-    right: -2rem;
-    background: var(--rust);
-    color: white;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    padding: 0.25rem 3rem;
-    transform: rotate(3deg);
-  }
-
-  .featured-category {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.75rem;
-  }
-
-  .featured h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 0.5rem;
-  }
-
-  .featured .meta {
-    font-size: 0.75rem;
-    color: rgba(245,240,232,0.5);
-    margin-bottom: 1rem;
-    display: flex;
-    gap: 1.5rem;
-  }
-
-  .featured .review-text {
-    font-size: 0.95rem;
-    line-height: 1.7;
-    color: rgba(245,240,232,0.85);
-    border-left: 3px solid var(--rust);
-    padding-left: 1rem;
-    font-style: italic;
-    margin-bottom: 1rem;
-  }
-
-  .tag {
-    display: inline-block;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    color: rgba(245,240,232,0.7);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.25rem 0.6rem;
-    margin-right: 0.4rem;
-    margin-top: 0.4rem;
-  }
-
-  .tag.free { background: rgba(212, 168, 50, 0.2); border-color: var(--gold); color: var(--gold); }
-
-  /* ── EVENT CARD ── */
-  .event-card {
-    border-bottom: 1px solid var(--mist);
-    padding: 1.5rem 0;
-    display: grid;
-    grid-template-columns: 80px 1fr;
-    gap: 1.25rem;
-    align-items: start;
-    animation: fadeUp 0.5s ease both;
-    transition: background 0.2s;
-    cursor: pointer;
-  }
-
-  .event-card:hover { background: var(--cream); padding-left: 0.5rem; margin-left: -0.5rem; }
-
-  .event-date-block {
-    text-align: center;
-    border: 1px solid var(--mist);
-    padding: 0.5rem 0.25rem;
-    background: var(--cream);
-  }
-
-  .event-date-block .month {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--rust);
-    display: block;
-  }
-
-  .event-date-block .day {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 900;
-    line-height: 1;
-    display: block;
-  }
-
-  .event-date-block .time {
-    font-size: 0.6rem;
-    color: rgba(26,22,18,0.4);
-    display: block;
-    margin-top: 0.25rem;
-  }
-
-  .card-category {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--sage);
-    margin-bottom: 0.25rem;
-  }
-
-  .card-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 0.3rem;
-  }
-
-  .card-venue {
-    font-size: 0.75rem;
-    color: rgba(26,22,18,0.5);
-    margin-bottom: 0.5rem;
-  }
-
-  .card-blurb {
-    font-size: 0.85rem;
-    line-height: 1.6;
-    color: rgba(26,22,18,0.7);
-  }
-
-  .card-tags { margin-top: 0.6rem; }
-
-  .tag-light {
-    display: inline-block;
-    background: var(--mist);
-    color: rgba(26,22,18,0.6);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.58rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0.2rem 0.5rem;
-    margin-right: 0.3rem;
-  }
-  .tag-light.free { background: #e8f0e6; color: var(--sage); }
-  .tag-light.reviewed { background: #f8e8e0; color: var(--rust); }
-
-  /* ── STARS ── */
-  .stars { color: var(--gold); font-size: 0.75rem; margin-bottom: 0.3rem; }
-
-  /* ── SIDEBAR ── */
-  .sidebar { }
-
-  .sidebar-block {
-    border: 1px solid var(--mist);
-    margin-bottom: 1.5rem;
-    animation: fadeUp 0.7s ease both;
-  }
-
-  .sidebar-block-header {
-    background: var(--ink);
-    color: var(--cream);
-    padding: 0.6rem 1rem;
-    font-family: 'Playfair Display', serif;
-    font-size: 0.9rem;
-    font-style: italic;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .sidebar-block-header .mono {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-style: normal;
-  }
-
-  .sidebar-block-body { padding: 1rem; }
-
-  .mini-event {
-    display: flex;
-    gap: 0.75rem;
-    align-items: start;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid var(--mist);
-  }
-  .mini-event:last-child { border-bottom: none; }
-
-  .mini-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--rust);
-    margin-top: 0.35rem;
-    flex-shrink: 0;
-  }
-  .mini-dot.free { background: var(--sage); }
-  .mini-dot.sports { background: var(--gold); }
-
-  .mini-event .mini-title {
-    font-size: 0.8rem;
-    font-weight: 500;
-    line-height: 1.3;
-    margin-bottom: 0.15rem;
-  }
-  .mini-event .mini-meta {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.58rem;
-    color: rgba(26,22,18,0.4);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  /* categories */
-  .cat-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
-  }
-
-  .cat-pill {
-    padding: 0.5rem;
-    text-align: center;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    cursor: pointer;
-    border: 1px solid var(--mist);
-    transition: all 0.2s;
-  }
-
-  .cat-pill:hover, .cat-pill.active {
-    background: var(--ink);
-    color: var(--cream);
-    border-color: var(--ink);
-  }
-
-  .cat-pill .cat-icon { font-size: 1.2rem; display: block; margin-bottom: 0.25rem; }
-
-  /* submit box */
-  .submit-box {
-    background: var(--rust);
-    color: white;
-    padding: 1.25rem;
-    margin-bottom: 1.5rem;
-  }
-  .submit-box h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    font-style: italic;
-    margin-bottom: 0.5rem;
-  }
-  .submit-box p {
-    font-size: 0.75rem;
-    line-height: 1.5;
-    opacity: 0.9;
-    margin-bottom: 1rem;
-  }
-  .submit-box button {
-    background: white;
-    color: var(--rust);
-    border: none;
-    padding: 0.6rem 1.25rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    font-weight: 500;
-    transition: opacity 0.2s;
-  }
-  .submit-box button:hover { opacity: 0.85; }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--ink);
-    color: rgba(245,240,232,0.5);
-    text-align: center;
-    padding: 2rem;
-    font-size: 0.7rem;
-    font-family: 'DM Mono', monospace;
-    letter-spacing: 0.08em;
-    margin-top: 2rem;
-  }
-
-  footer .footer-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    color: var(--cream);
-    font-style: italic;
-    margin-bottom: 0.5rem;
-  }
-
-  /* ── FILTERS ── */
-  .filter-bar {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-  }
-
-  .filter-chip {
-    border: 1px solid var(--mist);
-    background: var(--cream);
-    padding: 0.35rem 0.9rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
+  .main-grid { max-width: 1200px; margin: 0 auto; padding: 2.5rem 2rem; display: grid; grid-template-columns: 1fr 320px; gap: 3rem; }
+  .section-header { display: flex; align-items: baseline; gap: 1rem; border-bottom: 2px solid var(--ink); padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; font-style: italic; }
+  .section-header .count { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--rust); letter-spacing: 0.1em; text-transform: uppercase; }
+  .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .filter-chip { border: 1px solid var(--mist); background: var(--cream); padding: 0.35rem 0.9rem; font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.15s; }
   .filter-chip:hover { border-color: var(--ink); }
   .filter-chip.active { background: var(--ink); color: var(--cream); border-color: var(--ink); }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    .main-grid { grid-template-columns: 1fr; }
-    .masthead-inner { grid-template-columns: 1fr; text-align: center; }
-    .masthead-sub { text-align: center; }
-    .sidebar { display: none; }
-  }
+  .event-card { border-bottom: 1px solid var(--mist); padding: 1.5rem 0; display: grid; grid-template-columns: 80px 1fr; gap: 1.25rem; align-items: start; transition: background 0.2s; cursor: pointer; }
+  .event-card:hover { background: var(--cream); padding-left: 0.5rem; margin-left: -0.5rem; }
+  .event-date-block { text-align: center; border: 1px solid var(--mist); padding: 0.5rem 0.25rem; background: var(--cream); }
+  .event-date-block .month { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--rust); display: block; }
+  .event-date-block .day { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; line-height: 1; display: block; }
+  .event-date-block .time { font-size: 0.6rem; color: rgba(26,22,18,0.4); display: block; margin-top: 0.25rem; }
+  .card-category { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.25rem; }
+  .card-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.3rem; }
+  .card-venue { font-size: 0.75rem; color: rgba(26,22,18,0.5); margin-bottom: 0.5rem; }
+  .card-blurb { font-size: 0.85rem; line-height: 1.6; color: rgba(26,22,18,0.7); }
+  .card-tags { margin-top: 0.6rem; }
+  .tag-light { display: inline-block; background: var(--mist); color: rgba(26,22,18,0.6); font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.5rem; margin-right: 0.3rem; }
+  .tag-light.free { background: #e8f0e6; color: var(--sage); }
+  .sidebar-block { border: 1px solid var(--mist); margin-bottom: 1.5rem; }
+  .sidebar-block-header { background: var(--ink); color: var(--cream); padding: 0.6rem 1rem; font-family: 'Playfair Display', serif; font-size: 0.9rem; font-style: italic; display: flex; justify-content: space-between; align-items: center; }
+  .sidebar-block-header .mono { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-style: normal; }
+  .sidebar-block-body { padding: 1rem; }
+  .mini-event { display: flex; gap: 0.75rem; align-items: start; padding: 0.6rem 0; border-bottom: 1px solid var(--mist); }
+  .mini-event:last-child { border-bottom: none; }
+  .mini-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rust); margin-top: 0.35rem; flex-shrink: 0; }
+  .mini-dot.free { background: var(--sage); }
+  .mini-dot.sports { background: var(--gold); }
+  .mini-event .mini-title { font-size: 0.8rem; font-weight: 500; line-height: 1.3; margin-bottom: 0.15rem; }
+  .mini-event .mini-meta { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: rgba(26,22,18,0.4); text-transform: uppercase; letter-spacing: 0.08em; }
+  .submit-box { background: var(--rust); color: white; padding: 1.25rem; margin-bottom: 1.5rem; }
+  .submit-box h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-style: italic; margin-bottom: 0.5rem; }
+  .submit-box p { font-size: 0.75rem; line-height: 1.5; opacity: 0.9; margin-bottom: 1rem; }
+  .submit-box button { background: white; color: var(--rust); border: none; padding: 0.6rem 1.25rem; font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-weight: 500; }
+  footer { background: var(--ink); color: rgba(245,240,232,0.5); text-align: center; padding: 2rem; font-size: 0.7rem; font-family: 'DM Mono', monospace; letter-spacing: 0.08em; margin-top: 2rem; }
+  footer .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--cream); font-style: italic; margin-bottom: 0.5rem; }
+  .loading { text-align: center; padding: 3rem; font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .event-card { animation: fadeUp 0.4s ease both; }
+  @media (max-width: 768px) { .main-grid { grid-template-columns: 1fr; } .masthead-inner { grid-template-columns: 1fr; text-align: center; } .masthead-sub { text-align: center; } .sidebar { display: none; } }
 </style>
 </head>
 <body>
@@ -532,17 +84,16 @@
   <div class="masthead-inner">
     <div class="masthead-tagline">Columbus, Ohio · Independent Guide</div>
     <div class="masthead-title">Hidden<br><span>Columbus</span></div>
-    <div class="masthead-sub">The events nobody<br>puts on a billboard.<br>Real reviews, real people.</div>
+    <div class="masthead-sub">The events nobody<br>puts on a billboard.<br>Real previews, real people.</div>
   </div>
 </header>
 <nav class="nav-strip">
   <div class="nav-inner">
-    <a href="#" class="active">This Week</a>
-    <a href="#">Free Events</a>
-    <a href="#">Sports</a>
-    <a href="#">Arts & Music</a>
-    <a href="#">Family</a>
-    <a href="#">Reviews</a>
+    <a class="active" onclick="filterEvents('all')">This Week</a>
+    <a onclick="filterEvents('free')">Free Events</a>
+    <a onclick="filterEvents('Sports')">Sports</a>
+    <a onclick="filterEvents('Music')">Music</a>
+    <a onclick="filterEvents('Arts')">Arts</a>
     <a href="#" class="submit-btn">+ Tip Us Off</a>
   </div>
 </nav>
@@ -550,11 +101,9 @@
 
 <div class="dateline">
   <div class="dateline-inner">
-    <span>Week of March 30, 2026</span>
+    <span id="dateline-date">Columbus Metro Area</span>
     <span>·</span>
-    <span class="hot">▲ 14 new events added</span>
-    <span>·</span>
-    <span>Columbus Metro Area</span>
+    <span class="hot" id="dateline-count">Loading events...</span>
     <span>·</span>
     <span>All verified by humans</span>
   </div>
@@ -562,480 +111,52 @@
 
 <div class="main-grid">
   <main>
-
-    <!-- FEATURED -->
-    <div class="featured" style="animation-delay:0.1s">
-      <div class="featured-category">⭑ Editor's Pick — College Sports</div>
-      <h3>Capital University Baseball<br>vs. Wilmington — Doubleheader</h3>
-      <div class="meta">
-        <span>📍 Huntington Park, Downtown Columbus</span>
-        <span>🕐 Wednesday Apr 8</span>
-        <span>Free · Donation appreciated</span>
-      </div>
-      <div class="review-text">
-        Huntington Park on a weeknight with the Clippers out of town seats 10,000 people. With Capital University playing a doubleheader, you'll have your pick of seats behind home plate that would cost you $40 at a Clippers game. These are DIII athletes — serious ballplayers — competing on the same field, same scoreboard, same grass. Last time we checked, admission was free with a donation bucket if you feel like it. Two games, probably nothing out of pocket, one of the best ballparks in the midwest. Get there early and stay for both.
-      </div>
-      <div>
-        <span class="tag free">Free</span>
-        <span class="tag">DIII Baseball</span>
-        <span class="tag">Huntington Park</span>
-        <span class="tag">Doubleheader</span>
-      </div>
-    </div>
-
-    <!-- FILTER BAR -->
     <div class="filter-bar">
-      <div class="filter-chip active">All</div>
-      <div class="filter-chip">Free Only</div>
-      <div class="filter-chip">This Weekend</div>
-      <div class="filter-chip">Sports</div>
-      <div class="filter-chip">Arts</div>
-      <div class="filter-chip">Schools</div>
-      <div class="filter-chip">Outdoors</div>
+      <div class="filter-chip active" onclick="filterEvents('all')">All</div>
+      <div class="filter-chip" onclick="filterEvents('free')">Free Only</div>
+      <div class="filter-chip" onclick="filterEvents('Sports')">Sports</div>
+      <div class="filter-chip" onclick="filterEvents('Music')">Music</div>
+      <div class="filter-chip" onclick="filterEvents('Arts & Education')">Arts</div>
     </div>
 
     <div class="section-header">
       <h2>Coming Up</h2>
-      <span class="count">19 events · Columbus metro</span>
+      <span class="count" id="event-count">Loading...</span>
     </div>
 
-    <!-- EVENT CARDS -->
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">7</span>
-        <span class="time">TBD</span>
-      </div>
-      <div>
-        <div class="card-category">⚾ College Baseball</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/ohio-dominican-baseball-vs-ashland/92973/" target="_blank" style="color:inherit;text-decoration:none;">Ohio Dominican Baseball vs. Ashland</a></div>
-        <div class="card-venue">📍 Ohio Dominican University, Columbus</div>
-        <div class="card-blurb">Small school baseball on a Tuesday — the crowds are thin, the baseball is real, and you can park for free and walk right up. Ohio Dominican plays in a tight little campus park that actually makes for a better viewing experience than most bigger venues.</div>
-        <div class="card-tags"><span class="tag-light free">Free</span>
-          <span class="tag-light ">DIII</span>
-          <span class="tag-light ">Baseball</span>
-          </div>
-      </div>
+    <div id="event-list">
+      <div class="loading">▶ Loading events from Columbus...</div>
     </div>
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">7</span>
-        <span class="time">6pm</span>
-      </div>
-      <div>
-        <div class="card-category">⚾ Big Ten Baseball</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/osu-baseball-vs-bowling-green/91981/" target="_blank" style="color:inherit;text-decoration:none;">OSU Baseball vs. Bowling Green</a></div>
-        <div class="card-venue">📍 Bill Davis Stadium, OSU Campus</div>
-        <div class="card-blurb">Big Ten baseball at Bill Davis Stadium — one of the best college baseball venues in Ohio. Tickets are cheap, the sightlines are excellent, and it's a Tuesday night so you'll actually get a good seat. OSU baseball consistently puts professional-caliber players on the field.</div>
-        <div class="card-tags"><span class="tag-light free">Low Cost</span>
-          <span class="tag-light ">Big Ten</span>
-          <span class="tag-light ">OSU</span>
-          </div>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">8</span>
-        <span class="time">TBD</span>
-      </div>
-      <div>
-        <div class="card-category">🥎 College Softball</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/ohio-dominican-softball-vs-indianapolis/93060/" target="_blank" style="color:inherit;text-decoration:none;">Ohio Dominican Softball vs. Indianapolis</a></div>
-        <div class="card-venue">📍 Ohio Dominican University, Columbus</div>
-        <div class="card-blurb">DIII softball on a Wednesday afternoon. Free admission, walk-up seating, and a team that takes the game seriously. Good option if you want live sports without fighting for parking or paying for anything.</div>
-        <div class="card-tags"><span class="tag-light free">Free</span>
-          <span class="tag-light ">DIII</span>
-          <span class="tag-light ">Softball</span>
-          </div>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">9</span>
-        <span class="time">TBD</span>
-      </div>
-      <div>
-        <div class="card-category">🏀 Pro Basketball</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/columbus-wizards-vs-glass-city-wranglers/92227/" target="_blank" style="color:inherit;text-decoration:none;">Columbus Wizards vs. Glass City Wranglers</a></div>
-        <div class="card-venue">📍 Columbus, OH</div>
-        <div class="card-blurb">The Columbus Wizards are a professional basketball team most Columbus residents don't know exist. This is exactly the kind of thing this site exists for — live pro ball, low cost, no sellout crowds. Check their site for venue and tip-off time.</div>
-        <div class="card-tags"><span class="tag-light free">Low Cost</span>
-          <span class="tag-light ">Pro Basketball</span>
-          <span class="tag-light ">Hidden Gem</span>
-          </div>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">10</span>
-        <span class="time">TBD</span>
-      </div>
-      <div>
-        <div class="card-category">🏀 Pro Basketball</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/columbus-wizards-vs-kokomo-bobkats/92228/" target="_blank" style="color:inherit;text-decoration:none;">Columbus Wizards vs. Kokomo Bobkats</a></div>
-        <div class="card-venue">📍 Columbus, OH</div>
-        <div class="card-blurb">Second home game in two days for the Wizards. If you missed Thursday, here's another shot at catching Columbus's overlooked professional basketball team. Bring someone who thinks they've seen everything Columbus has to offer.</div>
-        <div class="card-tags"><span class="tag-light free">Low Cost</span>
-          <span class="tag-light ">Pro Basketball</span>
-          <span class="tag-light ">Local</span>
-          </div>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">10</span>
-        <span class="time">TBD</span>
-      </div>
-      <div>
-        <div class="card-category">🥍 College Lacrosse</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/ohio-weslyan-womens-lacrosse-vs-wittenberg/93048/" target="_blank" style="color:inherit;text-decoration:none;">Ohio Wesleyan Women's Lacrosse vs. Wittenberg</a></div>
-        <div class="card-venue">📍 Ohio Wesleyan University, Delaware OH</div>
-        <div class="card-blurb">DIII women's lacrosse — fast, physical, and completely free. Ohio Wesleyan is 30 minutes north of Columbus and worth the drive for a Friday afternoon game. Campus parking is easy and the atmosphere is genuinely fun.</div>
-        <div class="card-tags"><span class="tag-light free">Free</span>
-          <span class="tag-light ">DIII</span>
-          <span class="tag-light ">Lacrosse</span>
-          </div>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">10</span>
-        <span class="time">6pm</span>
-      </div>
-      <div>
-        <div class="card-category">⚾ Big Ten Baseball</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/osu-baseball-vs-penn-state/91982/" target="_blank" style="color:inherit;text-decoration:none;">OSU Baseball vs. Penn State</a></div>
-        <div class="card-venue">📍 Bill Davis Stadium, OSU Campus</div>
-        <div class="card-blurb">Three-game weekend series against Penn State at Bill Davis Stadium. Friday night under the lights is the best of the three — come early, grab a spot along the first base line, stay for all nine. Saturday at 3pm and Sunday at 1pm if you can't make Friday.</div>
-        <div class="card-tags"><span class="tag-light free">Low Cost</span>
-          <span class="tag-light ">Big Ten</span>
-          <span class="tag-light ">Weekend Series</span>
-          </div>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">11</span>
-        <span class="time">TBD</span>
-      </div>
-      <div>
-        <div class="card-category">🥍 College Lacrosse</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/capital-university-mens-lacrosse-vs-mount-union/92959/" target="_blank" style="color:inherit;text-decoration:none;">Capital University Men's Lacrosse vs. Mount Union</a></div>
-        <div class="card-venue">📍 Capital University, Bexley</div>
-        <div class="card-blurb">Capital University is five minutes from downtown Columbus in Bexley. Their lacrosse program is serious — Mount Union is a perennial DIII powerhouse. Free admission, easy parking, and a matchup that actually means something in the standings.</div>
-        <div class="card-tags"><span class="tag-light free">Free</span>
-          <span class="tag-light ">DIII</span>
-          <span class="tag-light ">Bexley</span>
-          </div>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">11</span>
-        <span class="time">TBD</span>
-      </div>
-      <div>
-        <div class="card-category">🥎 College Softball</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/capital-university-softball-vs-heidelberg/92944/" target="_blank" style="color:inherit;text-decoration:none;">Capital University Softball vs. Heidelberg</a></div>
-        <div class="card-venue">📍 Capital University, Bexley</div>
-        <div class="card-blurb">Saturday softball in Bexley — free, easy to get to, and a good excuse to spend an afternoon on a college campus without paying for anything. Capital's softball program competes seriously at the DIII level.</div>
-        <div class="card-tags"><span class="tag-light free">Free</span>
-          <span class="tag-light ">DIII</span>
-          <span class="tag-light ">Softball</span>
-          </div>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">11</span>
-        <span class="time">TBD</span>
-      </div>
-      <div>
-        <div class="card-category">🥍 College Lacrosse</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/ohio-weslyan-mens-lacrosse-vs-wittenberg/93043/" target="_blank" style="color:inherit;text-decoration:none;">Ohio Wesleyan Men's Lacrosse vs. Wittenberg</a></div>
-        <div class="card-venue">📍 Jay Martin Soccer Complex, Delaware OH</div>
-        <div class="card-blurb">Ohio Wesleyan men's lacrosse at the Jay Martin Soccer Complex — named after one of the winningest coaches in college lacrosse history. That tells you everything about the program. Free to watch, 30 minutes north of Columbus.</div>
-        <div class="card-tags"><span class="tag-light free">Free</span>
-          <span class="tag-light ">DIII</span>
-          <span class="tag-light ">Historic Program</span>
-          </div>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">11</span>
-        <span class="time">TBD</span>
-      </div>
-      <div>
-        <div class="card-category">🥎 College Softball — Senior Day</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/ohio-weslyan-softball-vs-wooster/93066/" target="_blank" style="color:inherit;text-decoration:none;">Ohio Wesleyan Softball vs. Wooster</a></div>
-        <div class="card-venue">📍 Ohio Wesleyan University, Delaware OH</div>
-        <div class="card-blurb">Senior Day softball at Ohio Wesleyan. If you've never been to a college Senior Day game — the pregame ceremonies alone are worth it. Players are introduced with their families, there are speeches, there are tears. Then they play softball. Free admission.</div>
-        <div class="card-tags"><span class="tag-light free">Free</span>
-          <span class="tag-light ">Senior Day</span>
-          <span class="tag-light ">DIII</span>
-          </div>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">11</span>
-        <span class="time">TBD</span>
-      </div>
-      <div>
-        <div class="card-category">🥍 Big Ten Lacrosse</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/osu-mens-lacrosse-vs-johns-hopkins/92617/" target="_blank" style="color:inherit;text-decoration:none;">OSU Men's Lacrosse vs. Johns Hopkins</a></div>
-        <div class="card-venue">📍 OSU Lacrosse Stadium, Columbus</div>
-        <div class="card-blurb">Johns Hopkins is one of the most storied programs in college lacrosse history. OSU vs. Hopkins at the dedicated lacrosse stadium on campus — free admission, serious competition, and a sport Columbus doesn't pay enough attention to.</div>
-        <div class="card-tags"><span class="tag-light free">Free</span>
-          <span class="tag-light ">Big Ten</span>
-          <span class="tag-light ">Top Matchup</span>
-          </div>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">11</span>
-        <span class="time">TBD</span>
-      </div>
-      <div>
-        <div class="card-category">⛳ Big Ten Golf</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/osu-mens-golf-robert-kepler-intercollegiate/92609/" target="_blank" style="color:inherit;text-decoration:none;">OSU Men's Golf — Robert Kepler Intercollegiate</a></div>
-        <div class="card-venue">📍 Columbus Country Club</div>
-        <div class="card-blurb">The 54th annual Robert Kepler Intercollegiate at Columbus Country Club — one of the finest private courses in Ohio, open to the public for this event. Walk the course, watch Big Ten golfers up close, no bleachers or jumbotrons required. Free to watch.</div>
-        <div class="card-tags"><span class="tag-light free">Free</span>
-          <span class="tag-light ">Big Ten</span>
-          <span class="tag-light ">Golf</span>
-          </div>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">12</span>
-        <span class="time">TBD</span>
-      </div>
-      <div>
-        <div class="card-category">🥎 College Softball</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/ohio-dominican-softball-vs-hillsdale/93061/" target="_blank" style="color:inherit;text-decoration:none;">Ohio Dominican Softball vs. Hillsdale</a></div>
-        <div class="card-venue">📍 Ohio Dominican University, Columbus</div>
-        <div class="card-blurb">Sunday softball at Ohio Dominican. Hillsdale is a competitive DIII program making this a meaningful game. Free admission, on-campus parking, and a relaxed Sunday afternoon pace.</div>
-        <div class="card-tags"><span class="tag-light free">Free</span>
-          <span class="tag-light ">DIII</span>
-          <span class="tag-light ">Sunday</span>
-          </div>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">12</span>
-        <span class="time">TBD</span>
-      </div>
-      <div>
-        <div class="card-category">🥎 College Softball — Strikeout Cancer Game</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/ohio-weslyan-softball-vs-oberlin/93067/" target="_blank" style="color:inherit;text-decoration:none;">Ohio Wesleyan Softball vs. Oberlin</a></div>
-        <div class="card-venue">📍 Ohio Wesleyan University, Delaware OH</div>
-        <div class="card-blurb">The Strikeout Cancer Game — Ohio Wesleyan's annual awareness game where players, coaches, and fans wear pink. Free admission, meaningful cause, and actual good softball. This is the kind of event you stumble into and feel good about for the rest of the day.</div>
-        <div class="card-tags"><span class="tag-light free">Free</span>
-          <span class="tag-light ">Strikeout Cancer</span>
-          <span class="tag-light ">DIII</span>
-          </div>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">14</span>
-        <span class="time">TBD</span>
-      </div>
-      <div>
-        <div class="card-category">⚾ College Baseball</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/ohio-weslyan-baseball-vs-otterbein/93056/" target="_blank" style="color:inherit;text-decoration:none;">Ohio Wesleyan Baseball vs. Otterbein</a></div>
-        <div class="card-venue">📍 Ohio Wesleyan University, Delaware OH</div>
-        <div class="card-blurb">Ohio Wesleyan vs. Otterbein — two central Ohio DIII programs that know each other well. These rivalry games have energy that bigger schools can't manufacture. Free, easy drive, walk-up seating.</div>
-        <div class="card-tags"><span class="tag-light free">Free</span>
-          <span class="tag-light ">DIII Rivalry</span>
-          <span class="tag-light ">Baseball</span>
-          </div>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">14</span>
-        <span class="time">TBD</span>
-      </div>
-      <div>
-        <div class="card-category">🥍 College Lacrosse</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/ohio-weslyan-mens-lacrosse-vs-depauw/93044/" target="_blank" style="color:inherit;text-decoration:none;">Ohio Wesleyan Men's Lacrosse vs. DePauw</a></div>
-        <div class="card-venue">📍 Ohio Wesleyan University, Delaware OH</div>
-        <div class="card-blurb">Another strong DIII matchup for Ohio Wesleyan lacrosse. DePauw travels from Indiana for this one — mid-week games like this draw small crowds but the lacrosse is fast and worth watching.</div>
-        <div class="card-tags"><span class="tag-light free">Free</span>
-          <span class="tag-light ">DIII</span>
-          <span class="tag-light ">Lacrosse</span>
-          </div>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">15</span>
-        <span class="time">TBD</span>
-      </div>
-      <div>
-        <div class="card-category">🥍 College Lacrosse</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/capital-university-womens-lacrosse-vs-ohio-northern/92954/" target="_blank" style="color:inherit;text-decoration:none;">Capital University Women's Lacrosse vs. Ohio Northern</a></div>
-        <div class="card-venue">📍 Capital University, Bexley</div>
-        <div class="card-blurb">Wednesday lacrosse in Bexley — Capital's women's program playing Ohio Northern at home. Five minutes from downtown, free admission, and a genuine college sports atmosphere without the hassle of a big campus.</div>
-        <div class="card-tags"><span class="tag-light free">Free</span>
-          <span class="tag-light ">DIII</span>
-          <span class="tag-light ">Bexley</span>
-          </div>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date-block">
-        <span class="month">Apr</span>
-        <span class="day">15</span>
-        <span class="time">TBD</span>
-      </div>
-      <div>
-        <div class="card-category">🥎 Big Ten Softball</div>
-        <div class="card-title"><a href="https://www.columbussports.org/event/ohio-state-softball-vs-pitt/92965/" target="_blank" style="color:inherit;text-decoration:none;">Ohio State Softball vs. Pitt</a></div>
-        <div class="card-venue">📍 Buckeye Softball Stadium, OSU Campus</div>
-        <div class="card-blurb">Big Ten softball at the dedicated OSU softball stadium. Pitt is a solid ACC program making this a real intersectional matchup. Free to attend, easy campus parking on a Wednesday, and a program that consistently produces professional-caliber players.</div>
-        <div class="card-tags"><span class="tag-light free">Free</span>
-          <span class="tag-light ">Big Ten</span>
-          <span class="tag-light ">OSU</span>
-          </div>
-      </div>
-    </div>
-
   </main>
 
-  <!-- SIDEBAR -->
   <aside class="sidebar">
-
     <div class="submit-box">
       <h3>Know something we don't?</h3>
-      <p>Tip us off about hidden events — school concerts, club sports, free lectures, weird community stuff. That's exactly what we're here for.</p>
+      <p>Tip us off about hidden events — school concerts, club sports, free lectures, weird community stuff.</p>
       <button>Submit an Event</button>
     </div>
 
     <div class="sidebar-block">
-      <div class="sidebar-block-header">
-        Browse by Type <span class="mono">Categories</span>
-      </div>
-      <div class="sidebar-block-body">
-        <div class="cat-grid">
-          <div class="cat-pill active"><span class="cat-icon">⚔️</span>Combat</div>
-          <div class="cat-pill"><span class="cat-icon">🎷</span>Jazz</div>
-          <div class="cat-pill"><span class="cat-icon">🤸</span>Gymnastics</div>
-          <div class="cat-pill"><span class="cat-icon">🎻</span>Classical</div>
-          <div class="cat-pill"><span class="cat-icon">🌿</span>Outdoors</div>
-          <div class="cat-pill"><span class="cat-icon">🧠</span>Talks</div>
-          <div class="cat-pill"><span class="cat-icon">🎭</span>Theater</div>
-          <div class="cat-pill"><span class="cat-icon">🏫</span>Schools</div>
-        </div>
+      <div class="sidebar-block-header">Free This Week <span class="mono">Zero Cost</span></div>
+      <div class="sidebar-block-body" id="free-sidebar">
+        <div class="loading" style="padding:1rem 0">Loading...</div>
       </div>
     </div>
 
     <div class="sidebar-block">
-      <div class="sidebar-block-header">
-        Free This Week <span class="mono">Zero Cost</span>
-      </div>
-      <div class="sidebar-block-body">
-        <div class="mini-event">
-          <div class="mini-dot free"></div>
-          <div>
-            <div class="mini-title">OSU Music Faculty Recital</div>
-            <div class="mini-meta">Apr 8 · Weigel Hall · Free</div>
-          </div>
-        </div>
-        <div class="mini-event">
-          <div class="mini-dot free"></div>
-          <div>
-            <div class="mini-title">Jazz Arts Group Youth Concert</div>
-            <div class="mini-meta">Apr 4 · Southern Theatre · Free</div>
-          </div>
-        </div>
-        <div class="mini-event">
-          <div class="mini-dot free"></div>
-          <div>
-            <div class="mini-title">Library Author Talk</div>
-            <div class="mini-meta">Apr 11 · Main Library · Free</div>
-          </div>
-        </div>
-        <div class="mini-event">
-          <div class="mini-dot free"></div>
-          <div>
-            <div class="mini-title">North Market Plant Swap</div>
-            <div class="mini-meta">Apr 6 · North Market · Free</div>
-          </div>
-        </div>
+      <div class="sidebar-block-header">Sports <span class="mono">Live Action</span></div>
+      <div class="sidebar-block-body" id="sports-sidebar">
+        <div class="loading" style="padding:1rem 0">Loading...</div>
       </div>
     </div>
 
     <div class="sidebar-block">
-      <div class="sidebar-block-header">
-        Sports This Month <span class="mono">Live Action</span>
-      </div>
-      <div class="sidebar-block-body">
-        <div class="mini-event">
-          <div class="mini-dot sports"></div>
-          <div>
-            <div class="mini-title">OSU Men's Gymnastics vs Michigan</div>
-            <div class="mini-meta">Apr 5 · Covelli Center · $5</div>
-          </div>
-        </div>
-        <div class="mini-event">
-          <div class="mini-dot sports"></div>
-          <div>
-            <div class="mini-title">Buhurt — Logan HS Tournament</div>
-            <div class="mini-meta">Apr 5 · Logan, OH · Low cost</div>
-          </div>
-        </div>
-        <div class="mini-event">
-          <div class="mini-dot sports"></div>
-          <div>
-            <div class="mini-title">OSU Women's Lacrosse</div>
-            <div class="mini-meta">Apr 9 · Buckeye Athletic Club · Free</div>
-          </div>
-        </div>
-        <div class="mini-event">
-          <div class="mini-dot sports"></div>
-          <div>
-            <div class="mini-title">Columbus Roller Derby Bout</div>
-            <div class="mini-meta">Apr 13 · Chiller Ice Rinks · $10</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="sidebar-block">
-      <div class="sidebar-block-header">
-        About This Site <span class="mono">Why We Exist</span>
-      </div>
+      <div class="sidebar-block-header">About <span class="mono">Why We Exist</span></div>
       <div class="sidebar-block-body" style="font-size:0.8rem;line-height:1.6;color:rgba(26,22,18,0.7);">
-        Columbus is full of genuinely remarkable events that never make the mainstream calendar sites. Teen jazz ensembles. NCAA gymnastics. Medieval combat sports. Free university concerts. We find them, attend them, and write honest reviews so you can decide for yourself.
-        <br><br>
+        Columbus is full of genuinely remarkable events that never make the mainstream calendar sites. We find them, preview them, and write honest copy so you can decide for yourself.<br><br>
         <strong style="color:var(--rust);">No ads. No sponsored posts. Just good tips.</strong>
       </div>
     </div>
-
   </aside>
 </div>
 
@@ -1046,22 +167,139 @@
 </footer>
 
 <script>
-  // Filter chip interactivity
-  document.querySelectorAll('.filter-chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-    });
-  });
+const SUPABASE_URL = "https://qyzwadjpsggmbkzadtei.supabase.co";
+const SUPABASE_KEY = "sb_publishable_m3u7lv83GixWWXbZ-dgzVw_QzBgUjdy";
 
-  // Category pill interactivity
-  document.querySelectorAll('.cat-pill').forEach(pill => {
-    pill.addEventListener('click', () => {
-      document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-    });
-  });
+let allEvents = [];
+let currentFilter = 'all';
+
+async function loadEvents() {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/events?select=*&order=date_raw.asc&limit=200`,
+      {
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`
+        }
+      }
+    );
+    allEvents = await res.json();
+    renderEvents(allEvents);
+    renderSidebars(allEvents);
+
+    const today = new Date().toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'});
+    document.getElementById('dateline-date').textContent = today;
+    document.getElementById('dateline-count').textContent = `▲ ${allEvents.length} events loaded`;
+  } catch(e) {
+    document.getElementById('event-list').innerHTML = '<div class="loading">Error loading events. Try refreshing.</div>';
+  }
+}
+
+function getCategoryIcon(cat, sub) {
+  if (!cat) return '📅';
+  const c = (cat + ' ' + (sub||'')).toLowerCase();
+  if (c.includes('music') || c.includes('jazz') || c.includes('concert')) return '🎵';
+  if (c.includes('sport') || c.includes('lacrosse') || c.includes('baseball') || c.includes('softball') || c.includes('golf')) return '🏟️';
+  if (c.includes('art') || c.includes('museum') || c.includes('gallery')) return '🎨';
+  if (c.includes('comedy')) return '🎭';
+  if (c.includes('community')) return '🌿';
+  return '📅';
+}
+
+function parseDate(dateRaw) {
+  if (!dateRaw) return { month: '?', day: '?', time: '' };
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  // Try "Mon Apr 07, 2026" format
+  const m = dateRaw.match(/(\w+)\s+(\d{1,2}),?\s+\d{4}/);
+  if (m) {
+    const monthStr = m[1].substring(0,3);
+    return { month: monthStr.toUpperCase(), day: m[2], time: '' };
+  }
+  // Try "Apr 07, 2026 · 7pm"
+  const m2 = dateRaw.match(/(\w{3,})\s+(\d{1,2})/);
+  if (m2) return { month: m2[1].substring(0,3).toUpperCase(), day: m2[2], time: '' };
+  return { month: 'TBD', day: '?', time: '' };
+}
+
+function renderEvents(events) {
+  const list = document.getElementById('event-list');
+  document.getElementById('event-count').textContent = `${events.length} events · Columbus metro`;
+
+  if (!events.length) {
+    list.innerHTML = '<div class="loading">No events found for this filter.</div>';
+    return;
+  }
+
+  list.innerHTML = events.slice(0, 60).map((e, i) => {
+    const {month, day, time} = parseDate(e.date_raw);
+    const isFree = (e.cost||'').toLowerCase().includes('free');
+    const icon = getCategoryIcon(e.category, e.subcategory);
+    const desc = e.preview_text || e.description || '';
+
+    return `
+      <div class="event-card" style="animation-delay:${i*0.03}s" onclick="window.open('${e.url}','_blank')">
+        <div class="event-date-block">
+          <span class="month">${month}</span>
+          <span class="day">${day}</span>
+          ${time ? `<span class="time">${time}</span>` : ''}
+        </div>
+        <div>
+          <div class="card-category">${icon} ${e.subcategory || e.category || 'Event'}</div>
+          <div class="card-title">${e.title}</div>
+          <div class="card-venue">📍 ${e.venue || 'Columbus, OH'} · ${e.cost || 'Check link'}</div>
+          ${desc ? `<div class="card-blurb">${desc.substring(0,200)}</div>` : ''}
+          <div class="card-tags">
+            ${isFree ? '<span class="tag-light free">Free</span>' : ''}
+            <span class="tag-light">${e.source || ''}</span>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderSidebars(events) {
+  // Free events sidebar
+  const free = events.filter(e => (e.cost||'').toLowerCase().includes('free')).slice(0,5);
+  document.getElementById('free-sidebar').innerHTML = free.map(e => `
+    <div class="mini-event">
+      <div class="mini-dot free"></div>
+      <div>
+        <div class="mini-title">${e.title.substring(0,40)}</div>
+        <div class="mini-meta">${e.date_raw ? e.date_raw.substring(0,15) : ''} · Free</div>
+      </div>
+    </div>`).join('') || '<div style="font-size:0.8rem;color:#999">No free events found</div>';
+
+  // Sports sidebar
+  const sports = events.filter(e => e.category === 'Sports').slice(0,5);
+  document.getElementById('sports-sidebar').innerHTML = sports.map(e => `
+    <div class="mini-event">
+      <div class="mini-dot sports"></div>
+      <div>
+        <div class="mini-title">${e.title.substring(0,40)}</div>
+        <div class="mini-meta">${e.date_raw ? e.date_raw.substring(0,15) : ''} · ${e.cost||'Check link'}</div>
+      </div>
+    </div>`).join('') || '<div style="font-size:0.8rem;color:#999">No sports events found</div>';
+}
+
+function filterEvents(filter) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-chip, .nav-inner a').forEach(el => el.classList.remove('active'));
+  event.target.classList.add('active');
+
+  let filtered = allEvents;
+  if (filter === 'free') {
+    filtered = allEvents.filter(e => (e.cost||'').toLowerCase().includes('free'));
+  } else if (filter !== 'all') {
+    filtered = allEvents.filter(e =>
+      (e.category||'').toLowerCase().includes(filter.toLowerCase()) ||
+      (e.subcategory||'').toLowerCase().includes(filter.toLowerCase())
+    );
+  }
+  renderEvents(filtered);
+}
+
+loadEvents();
 </script>
-
 </body>
 </html>
