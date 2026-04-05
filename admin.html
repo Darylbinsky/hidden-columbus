@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cbus Hidden — Admin Queue</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --surface: #1a1a1a;
+    --surface2: #222;
+    --border: #2e2e2e;
+    --text: #e8e4dc;
+    --muted: #666;
+    --rust: #d4522a;
+    --gold: #c9972a;
+    --sage: #5a8a52;
+    --blue: #4a7fa5;
+    --green: #3d7a4a;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--rust);
+  }
+
+  .logo span { color: var(--text); }
+
+  .topbar-stats {
+    display: flex;
+    gap: 1.5rem;
+    margin-left: auto;
+  }
+
+  .stat {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .stat .val {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .stat .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+  }
+  .stat .dot.queue { background: var(--gold); }
+  .stat .dot.ready { background: var(--sage); }
+  .stat .dot.skipped { background: var(--border); }
+
+  .run-btn {
+    background: var(--rust);
+    color: white;
+    border: none;
+    padding: 0.4rem 1rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .run-btn:hover { opacity: 0.85; }
+  .run-btn.running { background: var(--gold); }
+
+  /* ── LAYOUT ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 220px 1fr 320px;
+    height: calc(100vh - 52px);
+  }
+
+  /* ── LEFT NAV ── */
+  .leftnav {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 1.25rem 0;
+    overflow-y: auto;
+  }
+
+  .nav-section {
+    padding: 0 1rem 1rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1rem;
+  }
+
+  .nav-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    padding: 0 0.25rem;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.45rem 0.75rem;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  .nav-item:hover { background: var(--surface2); color: var(--text); }
+  .nav-item.active { background: var(--surface2); color: var(--text); }
+
+  .nav-item .badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    background: var(--border);
+    color: var(--muted);
+    padding: 0.1rem 0.4rem;
+    border-radius: 2px;
+    min-width: 22px;
+    text-align: center;
+  }
+
+  .nav-item.active .badge { background: var(--rust); color: white; }
+
+  /* ── MAIN QUEUE ── */
+  .queue {
+    overflow-y: auto;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .queue-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .queue-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .queue-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .q-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.3rem 0.75rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .q-btn:hover { border-color: var(--text); color: var(--text); }
+
+  /* ── EVENT ROW ── */
+  .event-row {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    margin-bottom: 0.5rem;
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    align-items: start;
+    transition: border-color 0.15s, background 0.15s;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .event-row:hover { border-color: #444; background: var(--surface2); }
+  .event-row.selected { border-color: var(--rust); }
+  .event-row.flagged-ready { border-color: var(--sage); border-left: 3px solid var(--sage); }
+  .event-row.flagged-skip { opacity: 0.35; }
+
+  .row-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0;
+    border-right: 1px solid var(--border);
+  }
+
+  .row-check input[type="checkbox"] {
+    width: 14px; height: 14px;
+    accent-color: var(--rust);
+    cursor: pointer;
+  }
+
+  .row-body {
+    padding: 0.75rem 1rem;
+    min-width: 0;
+  }
+
+  .row-meta {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    margin-bottom: 0.3rem;
+  }
+
+  .source-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.4rem;
+    border-radius: 2px;
+  }
+
+  .source-osu { background: #3a1f1f; color: #c47060; }
+  .source-library { background: #1f2e3a; color: #6090b0; }
+  .source-reddit { background: #2e2a1f; color: #c09040; }
+  .source-eventbrite { background: #1f2e25; color: #60a070; }
+  .source-parks { background: #252e1f; color: #80a060; }
+  .source-tip { background: #2a1f2e; color: #9060b0; }
+
+  .row-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+  }
+
+  .needs-eye {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--gold);
+    background: #2a2210;
+    padding: 0.1rem 0.35rem;
+    border-radius: 2px;
+  }
+
+  .row-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .row-venue {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .row-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.75rem 0.75rem 0.75rem 0;
+    align-items: flex-end;
+  }
+
+  .action-btn {
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    padding: 0.3rem 0.6rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .action-btn.preview {
+    border-color: var(--sage);
+    color: var(--sage);
+  }
+  .action-btn.preview:hover {
+    background: var(--sage);
+    color: var(--bg);
+  }
+
+  .action-btn.skip:hover {
+    border-color: var(--muted);
+    color: var(--text);
+  }
+
+  .action-btn.write {
+    border-color: var(--rust);
+    color: var(--rust);
+  }
+  .action-btn.write:hover {
+    background: var(--rust);
+    color: white;
+  }
+
+  /* ── RIGHT PANEL ── */
+  .rightpanel {
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+  }
+
+  .panel-top {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .panel-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .panel-title {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+
+  .panel-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .meta-key {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+    min-width: 55px;
+  }
+
+  .meta-val { color: var(--text); }
+
+  .panel-desc {
+    font-size: 0.8rem;
+    line-height: 1.65;
+    color: #999;
+    padding: 0.75rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    margin-bottom: 1rem;
+  }
+
+  .panel-url {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--blue);
+    word-break: break-all;
+    margin-bottom: 1rem;
+  }
+
+  .panel-url a { color: var(--blue); }
+
+  /* write preview section */
+  .write-section {
+    padding: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .write-section textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    padding: 0.75rem;
+    resize: vertical;
+    min-height: 120px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 0.5rem;
+  }
+
+  .write-section textarea:focus { border-color: var(--rust); }
+
+  .write-section textarea::placeholder { color: var(--muted); font-style: italic; }
+
+  .write-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .w-btn {
+    flex: 1;
+    padding: 0.5rem;
+    border: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .w-btn.generate { background: var(--rust); color: white; }
+  .w-btn.publish { background: var(--green); color: white; }
+  .w-btn:hover { opacity: 0.85; }
+  .w-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* empty state */
+  .empty-panel {
+    padding: 2rem 1rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    line-height: 1.7;
+  }
+
+  .empty-panel .big { font-size: 2rem; margin-bottom: 0.5rem; }
+
+  /* spinner */
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spinner {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border: 2px solid var(--border);
+    border-top-color: var(--rust);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 0.4rem;
+  }
+
+  /* toast */
+  .toast {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: var(--surface2);
+    border: 1px solid var(--sage);
+    color: var(--sage);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.6rem 1rem;
+    border-radius: 3px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.3s;
+    pointer-events: none;
+    z-index: 999;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  @keyframes fadeIn { from { opacity:0; transform: translateY(4px); } to { opacity:1; transform: translateY(0); } }
+  .event-row { animation: fadeIn 0.3s ease both; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="logo">CBUS<span>HIDDEN</span> / admin</div>
+  <div class="topbar-stats">
+    <div class="stat"><span class="dot queue"></span> Queue <span class="val" id="stat-queue">12</span></div>
+    <div class="stat"><span class="dot ready"></span> Ready <span class="val" id="stat-ready">3</span></div>
+    <div class="stat"><span class="dot skipped"></span> Skipped <span class="val" id="stat-skipped">4</span></div>
+    <div class="stat">Last run: <span class="val">Today 6:00 AM</span></div>
+  </div>
+  <button class="run-btn" id="run-btn" onclick="runScraper()">▶ Run Scraper</button>
+</div>
+
+<div class="layout">
+
+  <!-- LEFT NAV -->
+  <nav class="leftnav">
+    <div class="nav-section">
+      <div class="nav-label">Queue</div>
+      <div class="nav-item active" onclick="filterBy('all')">All incoming <span class="badge" id="b-all">12</span></div>
+      <div class="nav-item" onclick="filterBy('needs_review')">Needs eye <span class="badge" id="b-review">7</span></div>
+      <div class="nav-item" onclick="filterBy('ready')">✓ Flagged ready <span class="badge" id="b-ready">3</span></div>
+      <div class="nav-item" onclick="filterBy('skipped')">— Skipped <span class="badge" id="b-skip">4</span></div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">By Source</div>
+      <div class="nav-item" onclick="filterBy('OSU Athletics')">OSU Athletics <span class="badge">4</span></div>
+      <div class="nav-item" onclick="filterBy('Columbus Metropolitan Library')">Library <span class="badge">3</span></div>
+      <div class="nav-item" onclick="filterBy('Reddit r/Columbus')">Reddit <span class="badge">2</span></div>
+      <div class="nav-item" onclick="filterBy('Eventbrite')">Eventbrite <span class="badge">2</span></div>
+      <div class="nav-item" onclick="filterBy('Columbus Parks & Rec')">Parks & Rec <span class="badge">1</span></div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">By Category</div>
+      <div class="nav-item" onclick="filterBy('Sports')">Sports <span class="badge">4</span></div>
+      <div class="nav-item" onclick="filterBy('Arts & Education')">Arts & Education <span class="badge">4</span></div>
+      <div class="nav-item" onclick="filterBy('Community Tip')">Community Tips <span class="badge">2</span></div>
+      <div class="nav-item" onclick="filterBy('Outdoors & Community')">Outdoors <span class="badge">2</span></div>
+    </div>
+    <div style="padding: 1rem;">
+      <div class="nav-label" style="margin-bottom:0.75rem;">Manual Entry</div>
+      <button class="run-btn" style="width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);" onclick="addManual()">+ Add Event Tip</button>
+    </div>
+  </nav>
+
+  <!-- MAIN QUEUE -->
+  <main class="queue" id="queue">
+    <div class="queue-header">
+      <div class="queue-title" id="queue-title">All Incoming — 12 events</div>
+      <div class="queue-actions">
+        <button class="q-btn" onclick="skipAll()">Skip all selected</button>
+        <button class="q-btn" onclick="flagAll()">✓ Flag all selected</button>
+      </div>
+    </div>
+    <div id="event-list"></div>
+  </main>
+
+  <!-- RIGHT PANEL -->
+  <aside class="rightpanel" id="rightpanel">
+    <div class="empty-panel" id="empty-panel">
+      <div class="big">←</div>
+      Click an event to review it.<br><br>
+      Flag it <span style="color:var(--sage)">ready</span> and I'll write the preview.<br>
+      Skip it and it disappears.
+    </div>
+    <div id="detail-panel" style="display:none">
+      <div class="panel-top" id="panel-content"></div>
+      <div class="write-section">
+        <div class="panel-label">Your notes (optional)</div>
+        <textarea id="notes-input" placeholder="e.g. 'went last year, parking is easy, bring cash, good for kids 8+, runs about 90 min'"></textarea>
+        <div class="write-actions">
+          <button class="w-btn generate" id="gen-btn" onclick="generatePreview()">⚡ Write Preview</button>
+          <button class="w-btn publish" id="pub-btn" disabled onclick="publish()">→ Publish</button>
+        </div>
+        <div id="preview-output" style="margin-top:0.75rem;"></div>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── SAMPLE DATA (normally loaded from events.json) ──────────────────────────
+const EVENTS = [
+  {
+    id: "osu-mens-gymnastics-apr5",
+    source: "OSU Athletics",
+    category: "Sports",
+    subcategory: "Gymnastics (M)",
+    title: "OSU Men's Gymnastics vs Michigan",
+    date_raw: "Sat Apr 5, 7:00 PM",
+    venue: "Covelli Center, OSU Campus",
+    cost: "$5 general / Free w/ BuckID",
+    url: "https://ohiostatebuckeyes.com/sports/mens-gymnastics/schedule/",
+    needs_review: false,
+    status: "queue",
+  },
+  {
+    id: "cml-author-talk-apr11",
+    source: "Columbus Metropolitan Library",
+    category: "Arts & Education",
+    subcategory: "Library Events",
+    title: "Author Talk: Food History of the Midwest",
+    date_raw: "Fri Apr 11, 6:30 PM",
+    venue: "Main Library, 96 S Grant Ave",
+    cost: "Free",
+    description: "Local food historian discusses the immigrant culinary roots of Columbus.",
+    url: "https://www.columbuslibrary.org/events/",
+    needs_review: false,
+    status: "queue",
+  },
+  {
+    id: "reddit-buhurt-logan",
+    source: "Reddit r/Columbus",
+    category: "Community Tip",
+    subcategory: "Reddit",
+    title: "Buhurt tournament at Logan High School this weekend",
+    date_raw: "Apr 5, 2:00 PM",
+    venue: "Logan High School, Logan OH",
+    cost: "Low cost",
+    description: "Someone posted in r/Columbus about a medieval armored combat tournament. Full steel, looks legit.",
+    url: "https://reddit.com/r/Columbus",
+    needs_review: true,
+    status: "queue",
+  },
+  {
+    id: "osu-womens-lacrosse-apr9",
+    source: "OSU Athletics",
+    category: "Sports",
+    subcategory: "Lacrosse (W)",
+    title: "OSU Women's Lacrosse vs Penn State",
+    date_raw: "Wed Apr 9, 4:00 PM",
+    venue: "Buckeye Athletic Club, Columbus",
+    cost: "Free",
+    url: "https://ohiostatebuckeyes.com/sports/womens-lacrosse/schedule/",
+    needs_review: false,
+    status: "queue",
+  },
+  {
+    id: "eb-jazz-arts-group",
+    source: "Eventbrite",
+    category: "Arts & Education",
+    subcategory: "Youth Arts",
+    title: "Jazz Arts Group — Youth Ensemble Spring Concert",
+    date_raw: "Fri Apr 4, 7:30 PM",
+    venue: "Southern Theatre, 21 E Main St",
+    cost: "Free",
+    description: "Teen jazz musicians performing a full ensemble concert at a professional venue.",
+    url: "https://www.eventbrite.com",
+    needs_review: true,
+    status: "ready",
+  },
+  {
+    id: "parks-earth-day",
+    source: "Columbus Parks & Rec",
+    category: "Outdoors & Community",
+    subcategory: "Parks Events",
+    title: "Earth Day Cleanup — Scioto Audubon Metro Park",
+    date_raw: "Sat Apr 19, 9:00 AM",
+    venue: "Scioto Audubon Metro Park",
+    cost: "Free",
+    url: "https://www.columbus.gov/recreationandparks/",
+    needs_review: false,
+    status: "queue",
+  },
+  {
+    id: "cml-chess-club",
+    source: "Columbus Metropolitan Library",
+    category: "Arts & Education",
+    subcategory: "Library Events",
+    title: "Adult Chess Club — Weekly Open Play",
+    date_raw: "Every Tuesday, 6:00 PM",
+    venue: "Northside Branch Library",
+    cost: "Free",
+    url: "https://www.columbuslibrary.org/events/",
+    needs_review: false,
+    status: "skipped",
+  },
+  {
+    id: "osu-softball-apr12",
+    source: "OSU Athletics",
+    category: "Sports",
+    subcategory: "Softball",
+    title: "OSU Softball vs Indiana",
+    date_raw: "Sat Apr 12, 1:00 PM",
+    venue: "Buckeye Softball Stadium",
+    cost: "Free",
+    url: "https://ohiostatebuckeyes.com/sports/softball/schedule/",
+    needs_review: false,
+    status: "queue",
+  },
+  {
+    id: "reddit-food-truck-fest",
+    source: "Reddit r/Columbus",
+    category: "Community Tip",
+    subcategory: "Reddit",
+    title: "Food truck rally at Easton — anyone been?",
+    date_raw: "Apr 6",
+    venue: "Easton Town Center",
+    cost: "Free entry",
+    description: "Reddit thread about an informal food truck gathering. Details fuzzy.",
+    url: "https://reddit.com/r/Columbus",
+    needs_review: true,
+    status: "skipped",
+  },
+  {
+    id: "eb-roller-derby",
+    source: "Eventbrite",
+    category: "Sports",
+    subcategory: "Roller Derby",
+    title: "Columbus Roller Derby — Spring Bout",
+    date_raw: "Sat Apr 13, 6:00 PM",
+    venue: "Chiller Dublin Ice Rink",
+    cost: "$10 advance / $12 door",
+    description: "Full contact flat track roller derby. Loud, fast, surprisingly fun for the whole family.",
+    url: "https://www.eventbrite.com",
+    needs_review: true,
+    status: "ready",
+  },
+  {
+    id: "parks-plant-swap",
+    source: "Columbus Parks & Rec",
+    category: "Outdoors & Community",
+    subcategory: "Parks Events",
+    title: "North Market Plant Swap",
+    date_raw: "Sun Apr 6, 10:00 AM",
+    venue: "North Market, 59 Spruce St",
+    cost: "Free",
+    url: "https://www.columbus.gov/recreationandparks/",
+    needs_review: false,
+    status: "ready",
+  },
+  {
+    id: "cml-film-screening",
+    source: "Columbus Metropolitan Library",
+    category: "Arts & Education",
+    subcategory: "Library Events",
+    title: "Documentary Screening: The Last Ice Merchant",
+    date_raw: "Thu Apr 10, 6:00 PM",
+    venue: "Hilltop Branch Library",
+    cost: "Free",
+    description: "Award-winning documentary followed by discussion. Recommended for ages 14+.",
+    url: "https://www.columbuslibrary.org/events/",
+    needs_review: false,
+    status: "queue",
+  },
+];
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+let selectedEvent = null;
+let currentFilter = 'all';
+let generatedPreview = null;
+
+// ── RENDER ───────────────────────────────────────────────────────────────────
+function sourceClass(src) {
+  const map = {
+    "OSU Athletics": "source-osu",
+    "Columbus Metropolitan Library": "source-library",
+    "Reddit r/Columbus": "source-reddit",
+    "Eventbrite": "source-eventbrite",
+    "Columbus Parks & Rec": "source-parks",
+  };
+  return map[src] || "source-tip";
+}
+
+function renderList() {
+  const list = document.getElementById('event-list');
+  let filtered = EVENTS;
+
+  if (currentFilter === 'needs_review') filtered = EVENTS.filter(e => e.needs_review && e.status !== 'skipped');
+  else if (currentFilter === 'ready') filtered = EVENTS.filter(e => e.status === 'ready');
+  else if (currentFilter === 'skipped') filtered = EVENTS.filter(e => e.status === 'skipped');
+  else if (currentFilter !== 'all') {
+    filtered = EVENTS.filter(e =>
+      e.source === currentFilter || e.category === currentFilter
+    );
+  }
+
+  document.getElementById('queue-title').textContent =
+    `${currentFilter === 'all' ? 'All Incoming' : currentFilter} — ${filtered.length} events`;
+
+  list.innerHTML = filtered.map((e, i) => `
+    <div class="event-row ${e.status === 'ready' ? 'flagged-ready' : ''} ${e.status === 'skipped' ? 'flagged-skip' : ''} ${selectedEvent?.id === e.id ? 'selected' : ''}"
+         style="animation-delay:${i * 0.04}s"
+         onclick="selectEvent('${e.id}')">
+      <div class="row-check" onclick="event.stopPropagation()">
+        <input type="checkbox" data-id="${e.id}">
+      </div>
+      <div class="row-body">
+        <div class="row-meta">
+          <span class="source-tag ${sourceClass(e.source)}">${e.source}</span>
+          <span class="row-date">${e.date_raw}</span>
+          ${e.needs_review ? '<span class="needs-eye">⚠ verify</span>' : ''}
+          ${e.status === 'ready' ? '<span style="font-family:IBM Plex Mono,monospace;font-size:0.58rem;color:var(--sage)">✓ ready</span>' : ''}
+        </div>
+        <div class="row-title">${e.title}</div>
+        <div class="row-venue">📍 ${e.venue} &nbsp;·&nbsp; ${e.cost}</div>
+      </div>
+      <div class="row-actions">
+        ${e.status !== 'ready'
+          ? `<button class="action-btn preview" onclick="event.stopPropagation();flagReady('${e.id}')">✓ Flag Ready</button>`
+          : `<button class="action-btn write" onclick="event.stopPropagation();selectEvent('${e.id}');scrollToWrite()">⚡ Write</button>`
+        }
+        ${e.status !== 'skipped'
+          ? `<button class="action-btn skip" onclick="event.stopPropagation();skipEvent('${e.id}')">— Skip</button>`
+          : `<button class="action-btn" onclick="event.stopPropagation();restoreEvent('${e.id}')">↩ Restore</button>`
+        }
+      </div>
+    </div>
+  `).join('');
+
+  updateStats();
+}
+
+function updateStats() {
+  const q = EVENTS.filter(e => e.status === 'queue').length;
+  const r = EVENTS.filter(e => e.status === 'ready').length;
+  const s = EVENTS.filter(e => e.status === 'skipped').length;
+  const nr = EVENTS.filter(e => e.needs_review && e.status !== 'skipped').length;
+
+  document.getElementById('stat-queue').textContent = q;
+  document.getElementById('stat-ready').textContent = r;
+  document.getElementById('stat-skipped').textContent = s;
+  document.getElementById('b-all').textContent = q + r;
+  document.getElementById('b-review').textContent = nr;
+  document.getElementById('b-ready').textContent = r;
+  document.getElementById('b-skip').textContent = s;
+}
+
+// ── DETAIL PANEL ─────────────────────────────────────────────────────────────
+function selectEvent(id) {
+  selectedEvent = EVENTS.find(e => e.id === id);
+  generatedPreview = null;
+
+  document.getElementById('empty-panel').style.display = 'none';
+  document.getElementById('detail-panel').style.display = 'block';
+  document.getElementById('pub-btn').disabled = true;
+  document.getElementById('preview-output').innerHTML = '';
+  document.getElementById('notes-input').value = '';
+
+  const e = selectedEvent;
+  document.getElementById('panel-content').innerHTML = `
+    <div class="panel-label">${e.source} · ${e.category}</div>
+    <div class="panel-title">${e.title}</div>
+    <div class="panel-meta">
+      <div class="meta-row"><span class="meta-key">Date</span><span class="meta-val">${e.date_raw}</span></div>
+      <div class="meta-row"><span class="meta-key">Venue</span><span class="meta-val">${e.venue}</span></div>
+      <div class="meta-row"><span class="meta-key">Cost</span><span class="meta-val">${e.cost}</span></div>
+      <div class="meta-row"><span class="meta-key">Status</span><span class="meta-val" style="color:${e.status==='ready'?'var(--sage)':e.status==='skipped'?'var(--muted)':'var(--gold)'}">${e.status.toUpperCase()}</span></div>
+    </div>
+    ${e.description ? `<div class="panel-desc">${e.description}</div>` : ''}
+    <div class="panel-url">🔗 <a href="${e.url}" target="_blank">${e.url}</a></div>
+    <div style="display:flex;gap:0.5rem;margin-top:0.25rem;">
+      ${e.status !== 'ready'
+        ? `<button class="action-btn preview" style="flex:1" onclick="flagReady('${e.id}')">✓ Flag as Ready</button>`
+        : `<button class="action-btn" style="flex:1;border-color:var(--sage);color:var(--sage)" disabled>✓ Already Flagged</button>`
+      }
+      <button class="action-btn skip" style="flex:1" onclick="${e.status==='skipped'?`restoreEvent('${e.id}')`:`skipEvent('${e.id}')`}">
+        ${e.status === 'skipped' ? '↩ Restore' : '— Skip'}
+      </button>
+    </div>
+  `;
+
+  renderList();
+}
+
+// ── ACTIONS ──────────────────────────────────────────────────────────────────
+function flagReady(id) {
+  const e = EVENTS.find(e => e.id === id);
+  if (e) { e.status = 'ready'; renderList(); if (selectedEvent?.id === id) selectEvent(id); toast('Flagged as ready ✓'); }
+}
+
+function skipEvent(id) {
+  const e = EVENTS.find(e => e.id === id);
+  if (e) { e.status = 'skipped'; renderList(); if (selectedEvent?.id === id) selectEvent(id); toast('Skipped'); }
+}
+
+function restoreEvent(id) {
+  const e = EVENTS.find(e => e.id === id);
+  if (e) { e.status = 'queue'; renderList(); if (selectedEvent?.id === id) selectEvent(id); toast('Restored to queue'); }
+}
+
+function filterBy(key) {
+  currentFilter = key;
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  renderList();
+}
+
+function skipAll() {
+  document.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+    skipEvent(cb.dataset.id);
+  });
+}
+
+function flagAll() {
+  document.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+    flagReady(cb.dataset.id);
+  });
+}
+
+function addManual() {
+  toast('Manual entry form coming soon');
+}
+
+function scrollToWrite() {
+  document.querySelector('.write-section')?.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── SCRAPER RUN ───────────────────────────────────────────────────────────────
+function runScraper() {
+  const btn = document.getElementById('run-btn');
+  btn.innerHTML = '<span class="spinner"></span>Running...';
+  btn.classList.add('running');
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.innerHTML = '▶ Run Scraper';
+    btn.classList.remove('running');
+    btn.disabled = false;
+    toast('Scraper complete — 3 new events found');
+  }, 3000);
+}
+
+// ── AI PREVIEW GENERATION ─────────────────────────────────────────────────────
+async function generatePreview() {
+  if (!selectedEvent) return;
+  const btn = document.getElementById('gen-btn');
+  const out = document.getElementById('preview-output');
+  const notes = document.getElementById('notes-input').value;
+
+  btn.innerHTML = '<span class="spinner"></span>Writing...';
+  btn.disabled = true;
+
+  const e = selectedEvent;
+  const prompt = `You write event previews for "Cbus Hidden", a Columbus Ohio website that surfaces overlooked, free or cheap, genuinely interesting events that most people would never find.
+
+Your voice: specific, local, unsentimental, enthusiastic without being breathless. You write for someone who has 90 seconds to decide if they're going. You tell them exactly what to expect and why it's worth their time.
+
+Write a preview for this event:
+- Title: ${e.title}
+- Date/Time: ${e.date_raw}
+- Venue: ${e.venue}
+- Cost: ${e.cost}
+- Category: ${e.subcategory || e.category}
+- Source: ${e.source}
+${e.description ? `- Description: ${e.description}` : ''}
+${notes ? `- Editor notes: ${notes}` : ''}
+
+Format: 3-4 sentences. No headline needed. Start with what makes this worth attending. End with one practical detail (parking, timing, who it's good for, or how to get tickets). Do not start with "This" or "Columbus". Be specific.`;
+
+  try {
+    const resp = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        messages: [{ role: "user", content: prompt }]
+      })
+    });
+
+    const data = await resp.json();
+    const text = data.content?.find(b => b.type === 'text')?.text || '';
+
+    generatedPreview = text;
+    out.innerHTML = `
+      <div style="background:var(--bg);border:1px solid var(--sage);padding:0.75rem;font-size:0.82rem;line-height:1.65;color:var(--text);margin-bottom:0.5rem;">
+        ${text}
+      </div>
+      <div style="display:flex;gap:0.5rem;">
+        <button class="action-btn" style="font-size:0.6rem;padding:0.3rem 0.6rem;" onclick="generatePreview()">↺ Regenerate</button>
+        <button class="action-btn preview" style="font-size:0.6rem;padding:0.3rem 0.6rem;" onclick="copyPreview()">⧉ Copy</button>
+      </div>
+    `;
+    document.getElementById('pub-btn').disabled = false;
+
+  } catch(err) {
+    out.innerHTML = `<div style="color:var(--rust);font-size:0.75rem;padding:0.5rem;">Error generating preview. Check API connection.</div>`;
+  }
+
+  btn.innerHTML = '⚡ Write Preview';
+  btn.disabled = false;
+}
+
+function copyPreview() {
+  if (generatedPreview) {
+    navigator.clipboard.writeText(generatedPreview);
+    toast('Preview copied ✓');
+  }
+}
+
+function publish() {
+  if (!selectedEvent || !generatedPreview) return;
+  selectedEvent.status = 'published';
+  renderList();
+  document.getElementById('empty-panel').style.display = 'block';
+  document.getElementById('detail-panel').style.display = 'none';
+  toast('Published to site ✓');
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderList();
+</script>
+</body>
+</html>
