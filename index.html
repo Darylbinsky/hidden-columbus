@@ -105,7 +105,7 @@
     <span>·</span>
     <span class="hot" id="dateline-count">Loading events...</span>
     <span>·</span>
-    <span>All verified by humans</span>
+    <span>Columbus Metro Area</span>
   </div>
 </div>
 
@@ -168,7 +168,7 @@
 
 <script>
 const SUPABASE_URL = "https://qyzwadjpsggmbkzadtei.supabase.co";
-const SUPABASE_KEY = "sb_publishable_m3u7lv83GixWWXbZ-dgzVw_QzBgUjdy";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF5endhZGpwc2dnbWJremFkdGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0MTk3NDAsImV4cCI6MjA5MDk5NTc0MH0.LKvIDgutAlz6-svijvxsiOZpAPm0l4VQmpXVjHUkeL8";
 
 let allEvents = [];
 let currentFilter = 'all';
@@ -231,7 +231,13 @@ function renderEvents(events) {
     return;
   }
 
-  list.innerHTML = events.slice(0, 60).map((e, i) => {
+  // Sort: published with preview first, then by date
+  const sorted = [...events].sort((a,b) => {
+    if (a.published && !b.published) return -1;
+    if (!a.published && b.published) return 1;
+    return 0;
+  });
+  list.innerHTML = sorted.slice(0, 60).map((e, i) => {
     const {month, day, time} = parseDate(e.date_raw);
     const isFree = (e.cost||'').toLowerCase().includes('free');
     const icon = getCategoryIcon(e.category, e.subcategory);
@@ -251,7 +257,7 @@ function renderEvents(events) {
           ${desc ? `<div class="card-blurb">${desc.substring(0,200)}</div>` : ''}
           <div class="card-tags">
             ${isFree ? '<span class="tag-light free">Free</span>' : ''}
-            <span class="tag-light">${e.source || ''}</span>
+            <span class="tag-light">${e.source === "Cringe.com" ? e.venue : e.source}</span>
           </div>
         </div>
       </div>`;
