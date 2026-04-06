@@ -253,8 +253,9 @@ function featuredCard(e, delay) {
   const {m, d} = parseDate(e.date_raw);
   const desc = e.preview_text || e.description || '';
   const free = isFree(e);
+  const id = 'fc-' + e.id.replace(/[^a-z0-9]/gi, '');
   return `
-    <div class="featured-card animate" style="animation-delay:${delay}s" onclick="window.open('${e.url}','_blank')">
+    <div class="featured-card animate" id="${id}" style="animation-delay:${delay}s" onclick="expandCard('${id}', '${(e.url||'').replace(/'/g, '')}')">
       <div class="fc-cat">${icon(e)} ${e.subcategory || e.category || 'Event'}</div>
       <h3>${e.title}</h3>
       <div class="fc-meta">
@@ -262,12 +263,37 @@ function featuredCard(e, delay) {
         <span>📅 ${e.date_raw ? e.date_raw.substring(0,15) : 'Check link'}</span>
         <span>${e.cost || 'Check link'}</span>
       </div>
-      ${desc ? `<div class="fc-preview">${desc.substring(0,350)}</div>` : ''}
+      ${desc ? `<div class="fc-preview" id="${id}-preview">${desc.substring(0,300)}<span class="fc-more" id="${id}-more">... <span style="color:var(--gold);font-style:normal;font-size:0.75rem;">tap to read more</span></span></div>` : ''}
+      <div class="fc-expanded" id="${id}-expanded" style="display:none">
+        ${desc ? `<div class="fc-preview" style="font-style:normal;border-left-color:var(--gold)">${desc}</div>` : ''}
+        <div style="margin-top:1rem;">
+          <a href="${e.url}" target="_blank" onclick="event.stopPropagation()" style="display:inline-block;background:var(--rust);color:white;padding:0.5rem 1.25rem;font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;margin-right:0.5rem;">Get Details →</a>
+          <span onclick="collapseCard('${id}');event.stopPropagation()" style="font-family:'DM Mono',monospace;font-size:0.62rem;color:rgba(245,240,232,0.5);cursor:pointer;letter-spacing:0.08em;text-transform:uppercase;">▲ Close</span>
+        </div>
+      </div>
       <div class="fc-tags">
         ${free ? '<span class="fc-tag free">Free</span>' : ''}
         <span class="fc-tag">${e.source === 'Cringe.com' ? e.venue : e.source}</span>
       </div>
     </div>`;
+}
+
+function expandCard(id, url) {
+  const preview = document.getElementById(id + '-preview');
+  const expanded = document.getElementById(id + '-expanded');
+  const more = document.getElementById(id + '-more');
+  if (!expanded) return;
+  if (expanded.style.display === 'none') {
+    expanded.style.display = 'block';
+    if (preview) preview.style.display = 'none';
+  }
+}
+
+function collapseCard(id) {
+  const preview = document.getElementById(id + '-preview');
+  const expanded = document.getElementById(id + '-expanded');
+  if (expanded) expanded.style.display = 'none';
+  if (preview) preview.style.display = 'block';
 }
 
 function eventRow(e, delay) {
