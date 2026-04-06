@@ -3,78 +3,140 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hidden Columbus — Columbus's Best Kept Secrets</title>
+<title>Hidden Columbus — The Events Nobody Puts On A Billboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink: #1a1612;
-    --cream: #f5f0e8;
-    --rust: #c4451a;
-    --gold: #d4a832;
-    --sage: #4a6741;
-    --mist: #e8e2d4;
-    --paper: #faf7f2;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
-  .masthead { background: var(--ink); color: var(--cream); padding: 0; position: relative; overflow: hidden; }
-  .masthead-rule { height: 4px; background: linear-gradient(90deg, var(--rust) 0%, var(--gold) 50%, var(--sage) 100%); }
-  .masthead-inner { max-width: 1200px; margin: 0 auto; padding: 2.5rem 2rem 2rem; display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 1rem; }
-  .masthead-tagline { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); opacity: 0.9; }
-  .masthead-title { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; line-height: 0.9; text-align: center; letter-spacing: -0.02em; }
-  .masthead-title span { color: var(--rust); font-style: italic; }
-  .masthead-sub { font-size: 0.8rem; color: rgba(245,240,232,0.5); text-align: right; line-height: 1.6; }
-  .nav-strip { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.1); padding: 0.75rem 2rem; }
-  .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 2rem; align-items: center; }
-  .nav-inner a { color: rgba(245,240,232,0.6); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; cursor: pointer; }
-  .nav-inner a:hover, .nav-inner a.active { color: var(--gold); }
-  .nav-inner .submit-btn { margin-left: auto; background: var(--rust); color: white; padding: 0.4rem 1.1rem; border-radius: 2px; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; }
-  .dateline { background: var(--cream); border-bottom: 2px solid var(--ink); padding: 0.5rem 2rem; }
-  .dateline-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 1.5rem; font-family: 'DM Mono', monospace; font-size: 0.65rem; color: rgba(26,22,18,0.5); text-transform: uppercase; letter-spacing: 0.1em; }
-  .dateline-inner .hot { color: var(--rust); font-weight: 500; }
-  .main-grid { max-width: 1200px; margin: 0 auto; padding: 2.5rem 2rem; display: grid; grid-template-columns: 1fr 320px; gap: 3rem; }
-  .section-header { display: flex; align-items: baseline; gap: 1rem; border-bottom: 2px solid var(--ink); padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
-  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; font-style: italic; }
-  .section-header .count { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--rust); letter-spacing: 0.1em; text-transform: uppercase; }
-  .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-  .filter-chip { border: 1px solid var(--mist); background: var(--cream); padding: 0.35rem 0.9rem; font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.15s; }
-  .filter-chip:hover { border-color: var(--ink); }
-  .filter-chip.active { background: var(--ink); color: var(--cream); border-color: var(--ink); }
-  .event-card { border-bottom: 1px solid var(--mist); padding: 1.5rem 0; display: grid; grid-template-columns: 80px 1fr; gap: 1.25rem; align-items: start; transition: background 0.2s; cursor: pointer; }
-  .event-card:hover { background: var(--cream); padding-left: 0.5rem; margin-left: -0.5rem; }
-  .event-date-block { text-align: center; border: 1px solid var(--mist); padding: 0.5rem 0.25rem; background: var(--cream); }
-  .event-date-block .month { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--rust); display: block; }
-  .event-date-block .day { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; line-height: 1; display: block; }
-  .event-date-block .time { font-size: 0.6rem; color: rgba(26,22,18,0.4); display: block; margin-top: 0.25rem; }
-  .card-category { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.25rem; }
-  .card-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.3rem; }
-  .card-venue { font-size: 0.75rem; color: rgba(26,22,18,0.5); margin-bottom: 0.5rem; }
-  .card-blurb { font-size: 0.85rem; line-height: 1.6; color: rgba(26,22,18,0.7); }
-  .card-tags { margin-top: 0.6rem; }
-  .tag-light { display: inline-block; background: var(--mist); color: rgba(26,22,18,0.6); font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.5rem; margin-right: 0.3rem; }
-  .tag-light.free { background: #e8f0e6; color: var(--sage); }
-  .sidebar-block { border: 1px solid var(--mist); margin-bottom: 1.5rem; }
-  .sidebar-block-header { background: var(--ink); color: var(--cream); padding: 0.6rem 1rem; font-family: 'Playfair Display', serif; font-size: 0.9rem; font-style: italic; display: flex; justify-content: space-between; align-items: center; }
-  .sidebar-block-header .mono { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-style: normal; }
-  .sidebar-block-body { padding: 1rem; }
-  .mini-event { display: flex; gap: 0.75rem; align-items: start; padding: 0.6rem 0; border-bottom: 1px solid var(--mist); }
-  .mini-event:last-child { border-bottom: none; }
-  .mini-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rust); margin-top: 0.35rem; flex-shrink: 0; }
-  .mini-dot.free { background: var(--sage); }
-  .mini-dot.sports { background: var(--gold); }
-  .mini-event .mini-title { font-size: 0.8rem; font-weight: 500; line-height: 1.3; margin-bottom: 0.15rem; }
-  .mini-event .mini-meta { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: rgba(26,22,18,0.4); text-transform: uppercase; letter-spacing: 0.08em; }
-  .submit-box { background: var(--rust); color: white; padding: 1.25rem; margin-bottom: 1.5rem; }
-  .submit-box h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-style: italic; margin-bottom: 0.5rem; }
-  .submit-box p { font-size: 0.75rem; line-height: 1.5; opacity: 0.9; margin-bottom: 1rem; }
-  .submit-box button { background: white; color: var(--rust); border: none; padding: 0.6rem 1.25rem; font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-weight: 500; }
-  footer { background: var(--ink); color: rgba(245,240,232,0.5); text-align: center; padding: 2rem; font-size: 0.7rem; font-family: 'DM Mono', monospace; letter-spacing: 0.08em; margin-top: 2rem; }
-  footer .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--cream); font-style: italic; margin-bottom: 0.5rem; }
-  .loading { text-align: center; padding: 3rem; font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-  .event-card { animation: fadeUp 0.4s ease both; }
-  @media (max-width: 768px) { .main-grid { grid-template-columns: 1fr; } .masthead-inner { grid-template-columns: 1fr; text-align: center; } .masthead-sub { text-align: center; } .sidebar { display: none; } }
+:root {
+  --ink: #1a1612;
+  --cream: #f5f0e8;
+  --rust: #c4451a;
+  --gold: #d4a832;
+  --sage: #4a6741;
+  --blue: #2a5f8f;
+  --mist: #e8e2d4;
+  --paper: #faf7f2;
+  --dark: #0f0e0c;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+/* MASTHEAD */
+.masthead-rule { height: 4px; background: linear-gradient(90deg, var(--rust), var(--gold), var(--sage)); }
+.masthead { background: var(--ink); color: var(--cream); padding: 1.5rem 2rem 1rem; }
+.masthead-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; }
+.masthead-tagline { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); }
+.masthead-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 900; line-height: 0.9; text-align: center; letter-spacing: -0.02em; }
+.masthead-title span { color: var(--rust); font-style: italic; }
+.masthead-sub { font-size: 0.75rem; color: rgba(245,240,232,0.45); text-align: right; line-height: 1.6; }
+.nav-strip { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.08); padding: 0.6rem 2rem; }
+.nav-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+.nav-inner a { color: rgba(245,240,232,0.55); text-decoration: none; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; cursor: pointer; }
+.nav-inner a:hover, .nav-inner a.active { color: var(--gold); }
+.nav-inner .tip-btn { margin-left: auto; background: var(--rust); color: white; padding: 0.35rem 0.9rem; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; border: none; cursor: pointer; }
+.dateline { background: var(--cream); border-bottom: 2px solid var(--ink); padding: 0.4rem 2rem; }
+.dateline-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 1.5rem; font-family: 'DM Mono', monospace; font-size: 0.6rem; color: rgba(26,22,18,0.45); text-transform: uppercase; letter-spacing: 0.1em; }
+.dateline-inner .hot { color: var(--rust); font-weight: 500; }
+
+/* LAYOUT */
+.page { max-width: 1200px; margin: 0 auto; padding: 2rem 2rem 4rem; }
+.two-col { display: grid; grid-template-columns: 1fr 300px; gap: 3rem; align-items: start; }
+
+/* SECTION HEADERS */
+.section-label { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--ink); }
+.section-label h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; font-style: italic; }
+.section-label .pill { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; background: var(--ink); color: var(--cream); padding: 0.2rem 0.5rem; }
+.section-label .pill.free { background: var(--sage); }
+.section-label .pill.music { background: var(--blue); }
+.section-label .pill.out { background: var(--rust); }
+.section-label .pill.arts { background: var(--gold); color: var(--ink); }
+
+/* EDITOR PICKS — big featured cards */
+.featured-grid { display: grid; gap: 1rem; margin-bottom: 2.5rem; }
+.featured-card { background: var(--ink); color: var(--cream); padding: 1.75rem; position: relative; overflow: hidden; cursor: pointer; transition: transform 0.2s; }
+.featured-card:hover { transform: translateY(-2px); }
+.featured-card::before { content: 'EDITOR\'S PICK'; position: absolute; top: 1rem; right: -1.5rem; background: var(--rust); color: white; font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.12em; padding: 0.2rem 2.5rem; transform: rotate(3deg); }
+.featured-card .fc-cat { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+.featured-card h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; line-height: 1.1; margin-bottom: 0.4rem; }
+.featured-card .fc-meta { font-size: 0.7rem; color: rgba(245,240,232,0.45); margin-bottom: 0.9rem; display: flex; gap: 1.25rem; flex-wrap: wrap; }
+.featured-card .fc-preview { font-size: 0.88rem; line-height: 1.7; color: rgba(245,240,232,0.82); border-left: 3px solid var(--rust); padding-left: 0.9rem; font-style: italic; }
+.featured-card .fc-tags { margin-top: 0.9rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.featured-card .fc-tag { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.5rem; border: 1px solid rgba(255,255,255,0.2); color: rgba(245,240,232,0.6); }
+.featured-card .fc-tag.free { border-color: var(--gold); color: var(--gold); }
+
+/* SECTION CARDS — smaller event rows */
+.event-row { display: grid; grid-template-columns: 60px 1fr; gap: 1rem; align-items: start; padding: 1rem 0; border-bottom: 1px solid var(--mist); cursor: pointer; transition: background 0.15s; }
+.event-row:hover { background: var(--cream); margin: 0 -0.5rem; padding-left: 0.5rem; padding-right: 0.5rem; }
+.event-row:last-child { border-bottom: none; }
+.date-box { text-align: center; background: var(--cream); border: 1px solid var(--mist); padding: 0.35rem 0.2rem; }
+.date-box .dm { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; color: var(--rust); text-transform: uppercase; display: block; }
+.date-box .dd { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; line-height: 1; display: block; }
+.er-cat { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.15rem; }
+.er-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.2rem; }
+.er-venue { font-size: 0.7rem; color: rgba(26,22,18,0.45); margin-bottom: 0.35rem; }
+.er-blurb { font-size: 0.8rem; line-height: 1.55; color: rgba(26,22,18,0.65); }
+.er-tags { margin-top: 0.4rem; display: flex; gap: 0.3rem; flex-wrap: wrap; }
+.er-tag { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.06em; text-transform: uppercase; background: var(--mist); color: rgba(26,22,18,0.55); padding: 0.15rem 0.4rem; }
+.er-tag.free { background: #e8f0e6; color: var(--sage); }
+
+/* SECTION WRAPPER */
+.section-block { margin-bottom: 2.5rem; }
+
+/* FREE SECTION — highlighted background */
+.free-section { background: #f0f5ee; border-left: 4px solid var(--sage); padding: 1.25rem 1.25rem 0.25rem; margin-bottom: 2.5rem; }
+
+/* SEARCH BAR */
+.search-section { margin-bottom: 2.5rem; }
+.search-wrap { display: flex; gap: 0; }
+.search-wrap input { flex: 1; background: white; border: 2px solid var(--ink); border-right: none; padding: 0.75rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none; color: var(--ink); }
+.search-wrap input::placeholder { color: rgba(26,22,18,0.35); }
+.search-wrap button { background: var(--ink); color: var(--cream); border: 2px solid var(--ink); padding: 0.75rem 1.25rem; font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+.search-wrap button:hover { background: var(--rust); border-color: var(--rust); }
+.search-results { margin-top: 1rem; }
+.search-result-row { display: grid; grid-template-columns: 55px 1fr; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--mist); cursor: pointer; }
+.search-result-row:hover .sr-title { color: var(--rust); }
+.sr-title { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.15rem; transition: color 0.15s; }
+.sr-meta { font-size: 0.7rem; color: rgba(26,22,18,0.45); }
+
+/* SIDEBAR */
+.sidebar { position: sticky; top: 1rem; }
+.sb-block { border: 1px solid var(--mist); margin-bottom: 1.25rem; }
+.sb-head { background: var(--ink); color: var(--cream); padding: 0.55rem 0.9rem; font-family: 'Playfair Display', serif; font-size: 0.85rem; font-style: italic; display: flex; justify-content: space-between; align-items: center; }
+.sb-head .mono { font-family: 'DM Mono', monospace; font-size: 0.52rem; color: var(--gold); font-style: normal; letter-spacing: 0.1em; text-transform: uppercase; }
+.sb-body { padding: 0.75rem; }
+.sb-item { display: flex; gap: 0.6rem; padding: 0.5rem 0; border-bottom: 1px solid var(--mist); align-items: start; }
+.sb-item:last-child { border-bottom: none; }
+.sb-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--rust); flex-shrink: 0; margin-top: 0.3rem; }
+.sb-dot.free { background: var(--sage); }
+.sb-dot.music { background: var(--blue); }
+.sb-dot.out { background: var(--rust); }
+.sb-title { font-size: 0.75rem; font-weight: 500; line-height: 1.3; margin-bottom: 0.1rem; }
+.sb-meta { font-family: 'DM Mono', monospace; font-size: 0.55rem; color: rgba(26,22,18,0.4); text-transform: uppercase; letter-spacing: 0.06em; }
+.submit-box { background: var(--rust); color: white; padding: 1.1rem; margin-bottom: 1.25rem; }
+.submit-box h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-style: italic; margin-bottom: 0.4rem; }
+.submit-box p { font-size: 0.72rem; line-height: 1.5; opacity: 0.88; margin-bottom: 0.75rem; }
+.submit-box button { background: white; color: var(--rust); border: none; padding: 0.5rem 1rem; font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-weight: 500; }
+
+/* LOADING / EMPTY */
+.loading-msg { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: rgba(26,22,18,0.35); padding: 2rem; text-align: center; letter-spacing: 0.1em; }
+.see-all { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rust); cursor: pointer; text-decoration: none; display: inline-block; margin-top: 0.75rem; border-bottom: 1px solid var(--rust); }
+
+/* FOOTER */
+footer { background: var(--ink); color: rgba(245,240,232,0.4); text-align: center; padding: 2rem; font-size: 0.65rem; font-family: 'DM Mono', monospace; letter-spacing: 0.08em; }
+footer .fl { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--cream); font-style: italic; margin-bottom: 0.4rem; }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.animate { animation: fadeUp 0.5s ease both; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .two-col { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .masthead-inner { grid-template-columns: 1fr; text-align: center; }
+  .masthead-sub, .masthead-tagline { text-align: center; }
+  .featured-card h3 { font-size: 1.3rem; }
+}
 </style>
 </head>
 <body>
@@ -84,228 +146,317 @@
   <div class="masthead-inner">
     <div class="masthead-tagline">Columbus, Ohio · Independent Guide</div>
     <div class="masthead-title">Hidden<br><span>Columbus</span></div>
-    <div class="masthead-sub">The events nobody<br>puts on a billboard.<br>Real previews, real people.</div>
+    <div class="masthead-sub">The events nobody<br>puts on a billboard.</div>
   </div>
 </header>
 <nav class="nav-strip">
   <div class="nav-inner">
-    <a class="active" onclick="filterEvents('all')">This Week</a>
-    <a onclick="filterEvents('free')">Free Events</a>
-    <a onclick="filterEvents('Sports')">Sports</a>
-    <a onclick="filterEvents('Music')">Music</a>
-    <a onclick="filterEvents('Arts')">Arts</a>
-    <a href="#" class="submit-btn">+ Tip Us Off</a>
+    <a class="active" onclick="showSection('all')">This Week</a>
+    <a onclick="showSection('free')">🆓 Free</a>
+    <a onclick="showSection('Sports')">Sports</a>
+    <a onclick="showSection('Music')">Music</a>
+    <a onclick="showSection('out')">Out There</a>
+    <a onclick="showSection('Arts')">Arts</a>
+    <button class="tip-btn">+ Tip Us Off</button>
   </div>
 </nav>
 <div class="masthead-rule"></div>
 
 <div class="dateline">
   <div class="dateline-inner">
-    <span id="dateline-date">Columbus Metro Area</span>
+    <span id="dl-date">Columbus Metro Area</span>
     <span>·</span>
-    <span class="hot" id="dateline-count">Loading events...</span>
+    <span class="hot" id="dl-count">Loading...</span>
     <span>·</span>
-    <span>Columbus Metro Area</span>
+    <span id="dl-free">Free events this week</span>
   </div>
 </div>
 
-<div class="main-grid">
-  <main>
-    <div class="filter-bar">
-      <div class="filter-chip active" onclick="filterEvents('all')">All</div>
-      <div class="filter-chip" onclick="filterEvents('free')">Free Only</div>
-      <div class="filter-chip" onclick="filterEvents('Sports')">Sports</div>
-      <div class="filter-chip" onclick="filterEvents('Music')">Music</div>
-      <div class="filter-chip" onclick="filterEvents('Arts & Education')">Arts</div>
-    </div>
+<div class="page">
+  <div class="two-col">
+    <main id="main-content">
+      <div class="loading-msg">▶ Loading this week's picks...</div>
+    </main>
 
-    <div class="section-header">
-      <h2>Coming Up</h2>
-      <span class="count" id="event-count">Loading...</span>
-    </div>
-
-    <div id="event-list">
-      <div class="loading">▶ Loading events from Columbus...</div>
-    </div>
-  </main>
-
-  <aside class="sidebar">
-    <div class="submit-box">
-      <h3>Know something we don't?</h3>
-      <p>Tip us off about hidden events — school concerts, club sports, free lectures, weird community stuff.</p>
-      <button>Submit an Event</button>
-    </div>
-
-    <div class="sidebar-block">
-      <div class="sidebar-block-header">Free This Week <span class="mono">Zero Cost</span></div>
-      <div class="sidebar-block-body" id="free-sidebar">
-        <div class="loading" style="padding:1rem 0">Loading...</div>
+    <aside class="sidebar">
+      <div class="submit-box">
+        <h3>Know something we don't?</h3>
+        <p>Tip us off — school concerts, club sports, free lectures, buhurt tournaments. That's exactly what we're here for.</p>
+        <button>Submit an Event</button>
       </div>
-    </div>
-
-    <div class="sidebar-block">
-      <div class="sidebar-block-header">Sports <span class="mono">Live Action</span></div>
-      <div class="sidebar-block-body" id="sports-sidebar">
-        <div class="loading" style="padding:1rem 0">Loading...</div>
+      <div class="sb-block">
+        <div class="sb-head">Free This Week <span class="mono">Zero Cost</span></div>
+        <div class="sb-body" id="sb-free"><div class="loading-msg" style="padding:0.5rem">Loading...</div></div>
       </div>
-    </div>
-
-    <div class="sidebar-block">
-      <div class="sidebar-block-header">About <span class="mono">Why We Exist</span></div>
-      <div class="sidebar-block-body" style="font-size:0.8rem;line-height:1.6;color:rgba(26,22,18,0.7);">
-        Columbus is full of genuinely remarkable events that never make the mainstream calendar sites. We find them, preview them, and write honest copy so you can decide for yourself.<br><br>
-        <strong style="color:var(--rust);">No ads. No sponsored posts. Just good tips.</strong>
+      <div class="sb-block">
+        <div class="sb-head">Sports <span class="mono">Live Action</span></div>
+        <div class="sb-body" id="sb-sports"><div class="loading-msg" style="padding:0.5rem">Loading...</div></div>
       </div>
-    </div>
-  </aside>
+      <div class="sb-block">
+        <div class="sb-head">Music This Week <span class="mono">Live</span></div>
+        <div class="sb-body" id="sb-music"><div class="loading-msg" style="padding:0.5rem">Loading...</div></div>
+      </div>
+      <div class="sb-block">
+        <div class="sb-head">About <span class="mono">Why We Exist</span></div>
+        <div class="sb-body" style="font-size:0.78rem;line-height:1.6;color:rgba(26,22,18,0.65);">
+          Columbus has remarkable events nobody puts on a billboard. DIII sports at pro venues. Teen jazz ensembles. Medieval combat. Free recitals. We find them and tell you why to go.<br><br>
+          <strong style="color:var(--rust);">No ads. No sponsored posts. Just good tips.</strong>
+        </div>
+      </div>
+    </aside>
+  </div>
 </div>
 
 <footer>
-  <div class="footer-logo">Hidden Columbus</div>
+  <div class="fl">Hidden Columbus</div>
   <div>Columbus, Ohio's guide to events nobody puts on a billboard.</div>
-  <div style="margin-top:0.5rem;">Independent · Community-supported · Human-written</div>
+  <div style="margin-top:0.4rem;">Independent · Human-curated · Updated weekly</div>
 </footer>
 
 <script>
 const SUPABASE_URL = "https://qyzwadjpsggmbkzadtei.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF5endhZGpwc2dnbWJremFkdGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0MTk3NDAsImV4cCI6MjA5MDk5NTc0MH0.LKvIDgutAlz6-svijvxsiOZpAPm0l4VQmpXVjHUkeL8";
+const HDRS = { "apikey": SUPABASE_KEY, "Authorization": "Bearer " + SUPABASE_KEY };
 
 let allEvents = [];
-let currentFilter = 'all';
+let currentSection = 'all';
 
-async function loadEvents() {
-  try {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/events?select=*&order=needs_review.asc,date_raw.asc&limit=1000`,
-      {
-        headers: {
-          "apikey": SUPABASE_KEY,
-          "Authorization": `Bearer ${SUPABASE_KEY}`
-        }
-      }
-    );
-    allEvents = await res.json();
-    renderEvents(allEvents);
-    renderSidebars(allEvents);
+// OUT THERE keywords — the weird niche stuff
+const OUT_THERE = ['buhurt', 'fencing', 'curling', 'archery', 'medieval', 'combat', 'pinball', 'roller derby', 'falconry', 'polo', 'chess', 'trivia', 'vintage', 'swap meet'];
 
-    const today = new Date().toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'});
-    document.getElementById('dateline-date').textContent = today;
-    document.getElementById('dateline-count').textContent = `▲ ${allEvents.length} events loaded`;
-  } catch(e) {
-    document.getElementById('event-list').innerHTML = '<div class="loading">Error loading events. Try refreshing.</div>';
-  }
+function isOutThere(e) {
+  const t = ((e.title||'') + ' ' + (e.description||'') + ' ' + (e.subcategory||'')).toLowerCase();
+  return OUT_THERE.some(k => t.includes(k));
 }
 
-function getCategoryIcon(cat, sub) {
-  if (!cat) return '📅';
-  const c = (cat + ' ' + (sub||'')).toLowerCase();
-  if (c.includes('music') || c.includes('jazz') || c.includes('concert')) return '🎵';
-  if (c.includes('sport') || c.includes('lacrosse') || c.includes('baseball') || c.includes('softball') || c.includes('golf')) return '🏟️';
+function isFree(e) { return (e.cost||'').toLowerCase().includes('free'); }
+
+function parseDate(raw) {
+  if (!raw) return { m: '?', d: '?' };
+  const match = raw.match(/(\w+)\s+(\d{1,2})/);
+  if (!match) return { m: '?', d: '?' };
+  return { m: match[1].substring(0,3).toUpperCase(), d: match[2] };
+}
+
+function icon(e) {
+  const c = ((e.category||'') + ' ' + (e.subcategory||'')).toLowerCase();
+  if (isOutThere(e)) return '⚔️';
+  if (c.includes('music') || c.includes('jazz') || c.includes('live music')) return '🎵';
+  if (c.includes('sport') || c.includes('baseball') || c.includes('lacrosse') || c.includes('softball') || c.includes('golf') || c.includes('wrestling')) return '🏟️';
   if (c.includes('art') || c.includes('museum') || c.includes('gallery')) return '🎨';
   if (c.includes('comedy')) return '🎭';
-  if (c.includes('community')) return '🌿';
+  if (c.includes('community') || c.includes('reddit')) return '🌿';
   return '📅';
 }
 
-function parseDate(dateRaw) {
-  if (!dateRaw) return { month: '?', day: '?', time: '' };
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  // Try "Mon Apr 07, 2026" format
-  const m = dateRaw.match(/(\w+)\s+(\d{1,2}),?\s+\d{4}/);
-  if (m) {
-    const monthStr = m[1].substring(0,3);
-    return { month: monthStr.toUpperCase(), day: m[2], time: '' };
-  }
-  // Try "Apr 07, 2026 · 7pm"
-  const m2 = dateRaw.match(/(\w{3,})\s+(\d{1,2})/);
-  if (m2) return { month: m2[1].substring(0,3).toUpperCase(), day: m2[2], time: '' };
-  return { month: 'TBD', day: '?', time: '' };
+function featuredCard(e, delay) {
+  const {m, d} = parseDate(e.date_raw);
+  const desc = e.preview_text || e.description || '';
+  const free = isFree(e);
+  return `
+    <div class="featured-card animate" style="animation-delay:${delay}s" onclick="window.open('${e.url}','_blank')">
+      <div class="fc-cat">${icon(e)} ${e.subcategory || e.category || 'Event'}</div>
+      <h3>${e.title}</h3>
+      <div class="fc-meta">
+        <span>📍 ${e.venue || 'Columbus, OH'}</span>
+        <span>📅 ${e.date_raw ? e.date_raw.substring(0,15) : 'Check link'}</span>
+        <span>${e.cost || 'Check link'}</span>
+      </div>
+      ${desc ? `<div class="fc-preview">${desc.substring(0,350)}</div>` : ''}
+      <div class="fc-tags">
+        ${free ? '<span class="fc-tag free">Free</span>' : ''}
+        <span class="fc-tag">${e.source === 'Cringe.com' ? e.venue : e.source}</span>
+      </div>
+    </div>`;
 }
 
-function renderEvents(events) {
-  const list = document.getElementById('event-list');
-  document.getElementById('event-count').textContent = `${events.length} events · Columbus metro`;
+function eventRow(e, delay) {
+  const {m, d} = parseDate(e.date_raw);
+  const desc = e.preview_text || e.description || '';
+  const free = isFree(e);
+  return `
+    <div class="event-row animate" style="animation-delay:${delay}s" onclick="window.open('${e.url}','_blank')">
+      <div class="date-box"><span class="dm">${m}</span><span class="dd">${d}</span></div>
+      <div>
+        <div class="er-cat">${icon(e)} ${e.subcategory || e.category || 'Event'}</div>
+        <div class="er-title">${e.title}</div>
+        <div class="er-venue">📍 ${e.venue || 'Columbus, OH'} · ${e.cost || 'Check link'}</div>
+        ${desc ? `<div class="er-blurb">${desc.substring(0,180)}</div>` : ''}
+        <div class="er-tags">
+          ${free ? '<span class="er-tag free">Free</span>' : ''}
+          <span class="er-tag">${e.source === 'Cringe.com' ? e.venue : e.source}</span>
+        </div>
+      </div>
+    </div>`;
+}
 
-  if (!events.length) {
-    list.innerHTML = '<div class="loading">No events found for this filter.</div>';
+function sidebarItem(e, dotClass) {
+  const {m, d} = parseDate(e.date_raw);
+  return `
+    <div class="sb-item">
+      <div class="sb-dot ${dotClass}"></div>
+      <div>
+        <div class="sb-title">${e.title.substring(0,45)}</div>
+        <div class="sb-meta">${m} ${d} · ${e.cost || 'Check link'}</div>
+      </div>
+    </div>`;
+}
+
+function sectionBlock(label, pillClass, pillText, events, maxFeatured, maxRows) {
+  if (!events.length) return '';
+  const featured = events.filter(e => e.published && e.preview_text).slice(0, maxFeatured);
+  const rows = events.filter(e => !featured.includes(e)).slice(0, maxRows);
+  let html = `<div class="section-block">
+    <div class="section-label">
+      <h2>${label}</h2>
+      <span class="pill ${pillClass}">${pillText}</span>
+    </div>`;
+  featured.forEach((e,i) => html += featuredCard(e, i * 0.08));
+  if (rows.length) {
+    rows.forEach((e,i) => html += eventRow(e, (featured.length + i) * 0.05));
+  }
+  if (events.length > maxFeatured + maxRows) {
+    html += `<a class="see-all" onclick="showSection('${pillText.toLowerCase()}')">See all ${events.length} ${label.toLowerCase()} events →</a>`;
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderHome(events) {
+  const picks     = events.filter(e => e.published && e.preview_text);
+  const freeEvts  = events.filter(e => isFree(e));
+  const sports    = events.filter(e => e.category === 'Sports');
+  const music     = events.filter(e => e.category === 'Music' || (e.subcategory||'').toLowerCase().includes('jazz') || (e.subcategory||'').toLowerCase().includes('live music'));
+  const outThere  = events.filter(e => isOutThere(e));
+  const arts      = events.filter(e => (e.category||'').includes('Arts') || (e.category||'').includes('Education'));
+
+  let html = '';
+
+  // Editor's Picks at top
+  if (picks.length) {
+    html += `<div class="section-block">
+      <div class="section-label"><h2>Editor's Picks</h2><span class="pill">This Week</span></div>`;
+    picks.slice(0,3).forEach((e,i) => html += featuredCard(e, i * 0.1));
+    html += '</div>';
+  }
+
+  // Free section — always visible, highlighted
+  if (freeEvts.length) {
+    html += `<div class="free-section">
+      <div class="section-label"><h2>Free This Week</h2><span class="pill free">Zero Cost</span></div>`;
+    freeEvts.slice(0,5).forEach((e,i) => html += eventRow(e, i * 0.05));
+    if (freeEvts.length > 5) html += `<a class="see-all" onclick="showSection('free')">See all ${freeEvts.length} free events →</a>`;
+    html += '</div>';
+  }
+
+  html += sectionBlock('Sports', '', 'College & Amateur', sports, 1, 4);
+  html += sectionBlock('Music', 'music', 'Live This Week', music, 1, 4);
+
+  if (outThere.length) html += sectionBlock('Out There', 'out', 'The Weird & Wonderful', outThere, 1, 3);
+
+  html += sectionBlock('Arts & Education', 'arts', 'Culture', arts, 1, 3);
+
+  // Search bar at bottom
+  html += `
+    <div class="search-section">
+      <div class="section-label"><h2>Search All Events</h2><span class="pill">${events.length} Total</span></div>
+      <div class="search-wrap">
+        <input type="text" id="search-input" placeholder="Search by artist, venue, sport, or keyword..." oninput="searchEvents(this.value)">
+        <button onclick="searchEvents(document.getElementById('search-input').value)">Search</button>
+      </div>
+      <div id="search-results" class="search-results"></div>
+    </div>`;
+
+  document.getElementById('main-content').innerHTML = html;
+}
+
+function renderFiltered(events, label) {
+  const picks = events.filter(e => e.published && e.preview_text);
+  const rest   = events.filter(e => !picks.includes(e));
+  let html = `<div class="section-block">
+    <div class="section-label"><h2>${label}</h2><span class="pill">${events.length} events</span></div>
+    <a class="see-all" onclick="showSection('all')" style="margin-bottom:1rem;display:inline-block">← Back to this week</a>`;
+  picks.forEach((e,i) => html += featuredCard(e, i*0.08));
+  rest.slice(0,30).forEach((e,i) => html += eventRow(e, i*0.04));
+  html += '</div>';
+  document.getElementById('main-content').innerHTML = html;
+}
+
+function showSection(filter) {
+  currentSection = filter;
+  document.querySelectorAll('.nav-inner a').forEach(a => a.classList.remove('active'));
+  if (filter === 'all') {
+    document.querySelectorAll('.nav-inner a')[0].classList.add('active');
+    renderHome(allEvents);
+  } else if (filter === 'free') {
+    renderFiltered(allEvents.filter(e => isFree(e)), 'Free Events');
+  } else if (filter === 'out') {
+    renderFiltered(allEvents.filter(e => isOutThere(e)), 'Out There');
+  } else {
+    renderFiltered(allEvents.filter(e =>
+      (e.category||'').toLowerCase().includes(filter.toLowerCase()) ||
+      (e.subcategory||'').toLowerCase().includes(filter.toLowerCase())
+    ), filter);
+  }
+}
+
+function searchEvents(q) {
+  if (!q || q.length < 2) { document.getElementById('search-results').innerHTML = ''; return; }
+  const results = allEvents.filter(e =>
+    (e.title||'').toLowerCase().includes(q.toLowerCase()) ||
+    (e.venue||'').toLowerCase().includes(q.toLowerCase()) ||
+    (e.description||'').toLowerCase().includes(q.toLowerCase()) ||
+    (e.subcategory||'').toLowerCase().includes(q.toLowerCase())
+  ).slice(0,20);
+
+  if (!results.length) {
+    document.getElementById('search-results').innerHTML = '<div class="loading-msg">No results found.</div>';
     return;
   }
 
-  // Sort: published with preview first, then by date
-  const sorted = [...events].sort((a,b) => {
-    if (a.published && !b.published) return -1;
-    if (!a.published && b.published) return 1;
-    return 0;
-  });
-  list.innerHTML = sorted.slice(0, 60).map((e, i) => {
-    const {month, day, time} = parseDate(e.date_raw);
-    const isFree = (e.cost||'').toLowerCase().includes('free');
-    const icon = getCategoryIcon(e.category, e.subcategory);
-    const desc = e.preview_text || e.description || '';
-
-    return `
-      <div class="event-card" style="animation-delay:${i*0.03}s" onclick="window.open('${e.url}','_blank')">
-        <div class="event-date-block">
-          <span class="month">${month}</span>
-          <span class="day">${day}</span>
-          ${time ? `<span class="time">${time}</span>` : ''}
-        </div>
-        <div>
-          <div class="card-category">${icon} ${e.subcategory || e.category || 'Event'}</div>
-          <div class="card-title">${e.title}</div>
-          <div class="card-venue">📍 ${e.venue || 'Columbus, OH'} · ${e.cost || 'Check link'}</div>
-          ${desc ? `<div class="card-blurb">${desc.substring(0,200)}</div>` : ''}
-          <div class="card-tags">
-            ${isFree ? '<span class="tag-light free">Free</span>' : ''}
-            <span class="tag-light">${e.source === "Cringe.com" ? e.venue : e.source}</span>
-          </div>
-        </div>
-      </div>`;
+  document.getElementById('search-results').innerHTML = results.map(e => {
+    const {m,d} = parseDate(e.date_raw);
+    return `<div class="search-result-row" onclick="window.open('${e.url}','_blank')">
+      <div class="date-box"><span class="dm">${m}</span><span class="dd">${d}</span></div>
+      <div>
+        <div class="sr-title">${e.title}</div>
+        <div class="sr-meta">${e.venue || 'Columbus'} · ${e.cost || 'Check link'} · ${e.source === 'Cringe.com' ? e.venue : e.source}</div>
+      </div>
+    </div>`;
   }).join('');
 }
 
 function renderSidebars(events) {
-  // Free events sidebar
-  const free = events.filter(e => (e.cost||'').toLowerCase().includes('free')).slice(0,5);
-  document.getElementById('free-sidebar').innerHTML = free.map(e => `
-    <div class="mini-event">
-      <div class="mini-dot free"></div>
-      <div>
-        <div class="mini-title">${e.title.substring(0,40)}</div>
-        <div class="mini-meta">${e.date_raw ? e.date_raw.substring(0,15) : ''} · Free</div>
-      </div>
-    </div>`).join('') || '<div style="font-size:0.8rem;color:#999">No free events found</div>';
-
-  // Sports sidebar
+  const free   = events.filter(e => isFree(e)).slice(0,5);
   const sports = events.filter(e => e.category === 'Sports').slice(0,5);
-  document.getElementById('sports-sidebar').innerHTML = sports.map(e => `
-    <div class="mini-event">
-      <div class="mini-dot sports"></div>
-      <div>
-        <div class="mini-title">${e.title.substring(0,40)}</div>
-        <div class="mini-meta">${e.date_raw ? e.date_raw.substring(0,15) : ''} · ${e.cost||'Check link'}</div>
-      </div>
-    </div>`).join('') || '<div style="font-size:0.8rem;color:#999">No sports events found</div>';
+  const music  = events.filter(e => e.category === 'Music').slice(0,5);
+
+  document.getElementById('sb-free').innerHTML   = free.length   ? free.map(e   => sidebarItem(e,'free')).join('')  : '<div class="loading-msg" style="padding:0.5rem">None found</div>';
+  document.getElementById('sb-sports').innerHTML = sports.length ? sports.map(e => sidebarItem(e,'out')).join('')   : '<div class="loading-msg" style="padding:0.5rem">None found</div>';
+  document.getElementById('sb-music').innerHTML  = music.length  ? music.map(e  => sidebarItem(e,'music')).join('') : '<div class="loading-msg" style="padding:0.5rem">None found</div>';
 }
 
-function filterEvents(filter) {
-  currentFilter = filter;
-  document.querySelectorAll('.filter-chip, .nav-inner a').forEach(el => el.classList.remove('active'));
-  event.target.classList.add('active');
-
-  let filtered = allEvents;
-  if (filter === 'free') {
-    filtered = allEvents.filter(e => (e.cost||'').toLowerCase().includes('free'));
-  } else if (filter !== 'all') {
-    filtered = allEvents.filter(e =>
-      (e.category||'').toLowerCase().includes(filter.toLowerCase()) ||
-      (e.subcategory||'').toLowerCase().includes(filter.toLowerCase())
+async function init() {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/events?select=*&order=needs_review.asc,date_raw.asc&limit=1000`,
+      { headers: HDRS }
     );
+    allEvents = await res.json();
+
+    const freeCount = allEvents.filter(e => isFree(e)).length;
+    document.getElementById('dl-date').textContent = new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+    document.getElementById('dl-count').textContent = `▲ ${allEvents.length} events`;
+    document.getElementById('dl-free').textContent = `${freeCount} free this week`;
+
+    renderHome(allEvents);
+    renderSidebars(allEvents);
+  } catch(err) {
+    document.getElementById('main-content').innerHTML = '<div class="loading-msg">Error loading events. Try refreshing.</div>';
   }
-  renderEvents(filtered);
 }
 
-loadEvents();
+init();
 </script>
 </body>
 </html>
