@@ -160,6 +160,18 @@ footer .fl { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: v
     <button class="tip-btn">+ Tip Us Off</button>
   </div>
 </nav>
+<div style="background:var(--cream);border-bottom:1px solid var(--mist);padding:0.5rem 2rem;">
+  <div style="max-width:1200px;margin:0 auto;display:flex;gap:0;">
+    <input type="text" id="top-search" placeholder="Search 582 events — artist, venue, sport, keyword..." 
+      style="flex:1;background:white;border:2px solid var(--ink);border-right:none;padding:0.6rem 1rem;font-family:'DM Sans',sans-serif;font-size:0.85rem;outline:none;color:var(--ink);"
+      oninput="topSearch(this.value)">
+    <button onclick="topSearch(document.getElementById('top-search').value)"
+      style="background:var(--ink);color:var(--cream);border:2px solid var(--ink);padding:0.6rem 1.25rem;font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;">
+      Search
+    </button>
+  </div>
+  <div id="top-search-results" style="max-width:1200px;margin:0 auto;"></div>
+</div>
 <div class="masthead-rule"></div>
 
 <div class="dateline">
@@ -200,7 +212,7 @@ footer .fl { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: v
         <div class="sb-head">About <span class="mono">Why We Exist</span></div>
         <div class="sb-body" style="font-size:0.78rem;line-height:1.6;color:rgba(26,22,18,0.65);">
           Columbus has remarkable events nobody puts on a billboard. DIII sports at pro venues. Teen jazz ensembles. Medieval combat. Free recitals. We find them and tell you why to go.<br><br>
-          <strong style="color:var(--rust);">No ads. No sponsored posts. Just good tips.</strong>
+          <strong style="color:var(--rust);">Independent. Human-curated. Columbus-first.</strong>
         </div>
       </div>
     </aside>
@@ -483,6 +495,40 @@ async function init() {
 }
 
 init();
+
+function topSearch(q) {
+  const resultsEl = document.getElementById('top-search-results');
+  if (!q || q.length < 2) { resultsEl.innerHTML = ''; return; }
+  const results = allEvents.filter(e =>
+    (e.title||'').toLowerCase().includes(q.toLowerCase()) ||
+    (e.venue||'').toLowerCase().includes(q.toLowerCase()) ||
+    (e.description||'').toLowerCase().includes(q.toLowerCase()) ||
+    (e.subcategory||'').toLowerCase().includes(q.toLowerCase()) ||
+    (e.preview_text||'').toLowerCase().includes(q.toLowerCase())
+  ).slice(0,15);
+
+  if (!results.length) {
+    resultsEl.innerHTML = '<div style="padding:0.5rem;font-family:DM Mono,monospace;font-size:0.7rem;color:rgba(26,22,18,0.4)">No results found.</div>';
+    return;
+  }
+
+  resultsEl.innerHTML = '<div style="background:white;border:1px solid var(--mist);border-top:none;max-height:400px;overflow-y:auto;">' +
+    results.map(e => {
+      const {m,d} = parseDate(e.date_raw);
+      const desc = e.preview_text || e.description || '';
+      return '<div onclick="window.open(\''+e.url+'\',\'_blank\')" style="display:grid;grid-template-columns:55px 1fr;gap:0.75rem;padding:0.75rem;border-bottom:1px solid var(--mist);cursor:pointer;" onmouseover="this.style.background=\'#faf7f2\'" onmouseout="this.style.background=\'white\'">' +
+        '<div style="text-align:center;background:var(--cream);border:1px solid var(--mist);padding:0.35rem 0.2rem;">' +
+          '<span style="font-family:DM Mono,monospace;font-size:0.55rem;color:var(--rust);text-transform:uppercase;display:block">'+m+'</span>' +
+          '<span style="font-family:Playfair Display,serif;font-size:1.4rem;font-weight:900;line-height:1;display:block">'+d+'</span>' +
+        '</div>' +
+        '<div>' +
+          '<div style="font-family:Playfair Display,serif;font-size:0.95rem;font-weight:700;margin-bottom:0.15rem">'+e.title+'</div>' +
+          '<div style="font-size:0.7rem;color:rgba(26,22,18,0.45)">'+( e.venue||'Columbus')+'  ·  '+(e.cost||'Check link')+'  ·  '+(e.source==='Cringe.com'?e.venue:e.source)+'</div>' +
+          (desc ? '<div style="font-size:0.78rem;color:rgba(26,22,18,0.6);margin-top:0.25rem;line-height:1.5">'+desc.replace(/^#+\s*/,'').substring(0,120)+'...</div>' : '') +
+        '</div>' +
+      '</div>';
+    }).join('') + '</div>';
+}
 </script>
 </body>
 </html>
